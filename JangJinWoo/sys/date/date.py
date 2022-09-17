@@ -1,5 +1,6 @@
 import re
 
+#미리 컴파일
 def selectDate(text):
     regex1 = '[월화수목금토일]요일'
     regex2 = '(오늘|내일|모레|글피|내일모레)'
