@@ -25,6 +25,14 @@ date_lunar = re.compile(r"""
 date_period_lunar = re.compile(r'음력\s\d+월')
 
 
+time=re.compile(r'(정오)?(오전)?((\d+분|\d+시|\d+초)\s+뒤?)?')
+time_period=re.compile(r'((오전|오후)?)*\s?((아침|점심|저녁)?)*\s?((\d+시부터\s?\d+시까지)?)*')
+date_time=re.compile(r'(내일|현재|오늘|모레|(\d+월\s?\d일))?\s((오전|오후)?\s?((\d+시)?\s?(\d+분)?))?')
+date_time_period=re.compile(r'(([월화수목금토일]요일)|오늘|내일|모레|글피|어[제|젯]|(\d+월\s?\d일))?\s?((낮|밤|저녁|오전|오후)?)*\s?((아침|점심|저녁)?)*\s?((\d+시부터\s?\d+시까지)?)*')
+number=re.compile(r'((일|이|삼|사|오|육|칠|팔|구|십)?|(하나|둘|셋|넷|다섯|여섯|일곱|여덟|아홉)?)*(((\d+)(명|개))?((하나|둘|셋|넷|다섯|여섯|일곱|여덟|아홉)\s?(명|개))?)*(열명|열개)?')
+number_times=re.compile(r'(\d+(화|부|편|차|회|회차))*')
+number_percent=re.compile(r'(\d+(퍼센트|프로|%))*')
+
 number_ordinal = re.compile('(\d+번)|(첫?두?세?네?(열|(스[무|물])|(서른)|(마흔)|(쉰)|(예순)|(일흔)|(여든)|(아흔))?\s?[한두세네]?(다섯)?(여섯)?(일곱)?(여덟)?(아홉)?\s?번째)')
 number_age = re.compile('(\d+[살세])|(((열)?(스[무물])?(서른)?(마흔)?(쉰)?(예순)?(일흔)?(여든)?(아흔)?)\s?([한두세네]*(다섯)?(여섯)?(일곱)?(여덟)?(아홉)?)\s?살)')
 number_birthyear = re.compile('\d{1,4}년생')
@@ -32,6 +40,47 @@ number_rank = re.compile('\d+[등위]')
 number_decade = re.compile('\d{1,4}년대')
 unit_length = re.compile('\d+\.?\d*\s?((mm|(밀리미터))|((?!cm²)cm|(센티미터))|((?!m²)m|(미터))|((?!km²)km|(킬로미터))|(in|(인치))|((?!ft²)ft|(피트))|((?!yd²)yd|(야드))|(ch|(체인))|(fur|(펄롱))|(mile|(마일)))')
 unit_area = re.compile('\d+\.?\d*\s?((m²|(제곱미터))|(a|(아르))|(ha|(헥타르|(헥타아르)))|(km²|(제곱킬로미터))|(ft²|(제곱피트))|(yd²|(제곱야드))|(ac|(에이커))|(평)|(단)|(정))')
+
+
+#은비
+weight1 = r"mg|g|kg|t|kt|gr|oz|lb"
+weight2 = r"milligram|gram|kilogram|tonne|metric ton|kiloton|grain|ounce|pound"
+weight3 = r"밀리그램|그램|킬로그램|톤|킬로톤|그레인|온스|돈|냥|근|관"
+weight4 = r"錢|兩|斤|貫"
+
+volume1 = r"cc|mℓ|ml|dℓ|dl|ℓ|l|cm3|m3|in3|ft3|yd3|gal|gallon|bbl|barrel|fl. oz.|fl|"
+volume2 = r"시시|밀리리터|데시리터|리터|세제곱센티미터|세제곱미터|세제곱인치|세제곱피트|" \
+          r"세제곱야드|갤런|배럴|액량 온스|홉|되|말|섬"
+volume3 = r"cubic centimeter|milliliters|deciliter|liter|cubic centimetre|fluid ounce|" \
+          r"gallon|barrel"
+volume4 = r"升|斗|苫"
+
+pressure1 = r"atm|Pa|hPa|kPa|MPa|dyne/cm2|mb|bar|kgf/cm2|psi|mmHg|inchHg|mmH2O|inchH2O"
+pressure2 = r"기압|파스칼|헥토파스칼|킬로파스칼|메가파스칼|다인/제곱센티미터|밀리바|바|" \
+            r"킬로그램힘/제곱센티미터|프사이|수은주밀리미터|수은주인치|수주밀리미터|수주인치"
+pressure3 = r"atmospheric pressure|pascal|hectopascal|kilopascal|megapascal|dyne/square centimeters|" \
+            r"millibar|kgf/square centimeters|pound per square inch|millimeter of mercury|inch of mercury|" \
+            r"millimeter of water|inch of water"
+
+temperature1 = r"°C|°F|K|°R"
+temperature2 = r"섭씨온도|화씨온도절대온도|란씨온도"
+temperature3 = r"celsius|centigrade|fahrenheit scale|kelvin|rankine"
+
+speed1 = r"m/s|m/h|km/s|km/h|in/s|in/h|ft/s|ft/h|mi/s|mi/h|kn|mach"
+speed2 = r"미터 매 초|미터 매 시|킬로미터 매 초|킬로미터 매 시|인치 매 초|인치 매 시|피트 매 초|피트 매 시|" \
+         r"마일 매 초|마일 매 시|노트|마하"
+speed3 = r"meter per second|meter per hour|kilometer per second|kilometer per hour|inch per second|inch per hour|" \
+         r"feet per second|feet per hour|mile per second|mile per hour|knot|mach"
+
+data1 = r"bit|B|KB|KiB|MB|MiB|GB|GiB|TB|TiB|PB|PiB|EB|EiB|ZB|ZiB|YB|YiB"
+data2 = r"비트|바이트|킬로바이트|키비바이트|메가바이트|메비바이트|기가바이트|기비바이트|테라바이트|테비바이트|" \
+        r"페타바이트|페비바이트|엑사바이트|엑비바이트|제타바이트|제비바이트|요타바이트|요비바이트"
+data3 = r"byte|kilobyte|kibibyte|megabyte|mebibyte|gigabyte|gibibyte|terabyte|tebibyte|petabyte|pebibyte|exabyte|" \
+        r"exbibyte|zettabyte|zebibyte|yottabyte|yobibyte"
+
+energy1 = r"J|cal|kcal|Wh|kWh|eV|erg"
+energy2 = r"줄|칼로리|킬로칼로리|와트시|킬로와트시|마력|에르그|전자볼트"
+energy3 = r"electron Volt"
 
 
 fortune_starsign = re.compile('[ㄱ-ㅣ가-힣]+자리')
