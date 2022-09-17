@@ -23,6 +23,17 @@ date_lunar = re.compile(r"""
                         | 음력\s(설|추석)
                         """, re.VERBOSE)
 date_period_lunar = re.compile(r'음력\s\d+월')
+
+
+number_ordinal = re.compile('(\d+번)|(첫?두?세?네?(열|(스[무|물])|(서른)|(마흔)|(쉰)|(예순)|(일흔)|(여든)|(아흔))?\s?[한두세네]?(다섯)?(여섯)?(일곱)?(여덟)?(아홉)?\s?번째)')
+number_age = re.compile('(\d+[살세])|(((열)?(스[무물])?(서른)?(마흔)?(쉰)?(예순)?(일흔)?(여든)?(아흔)?)\s?([한두세네]*(다섯)?(여섯)?(일곱)?(여덟)?(아홉)?)\s?살)')
+number_birthyear = re.compile('\d{1,4}년생')
+number_rank = re.compile('\d+[등위]')
+number_decade = re.compile('\d{1,4}년대')
+unit_length = re.compile('\d+\.?\d*\s?((mm|(밀리미터))|((?!cm²)cm|(센티미터))|((?!m²)m|(미터))|((?!km²)km|(킬로미터))|(in|(인치))|((?!ft²)ft|(피트))|((?!yd²)yd|(야드))|(ch|(체인))|(fur|(펄롱))|(mile|(마일)))')
+unit_area = re.compile('\d+\.?\d*\s?((m²|(제곱미터))|(a|(아르))|(ha|(헥타르|(헥타아르)))|(km²|(제곱킬로미터))|(ft²|(제곱피트))|(yd²|(제곱야드))|(ac|(에이커))|(평)|(단)|(정))')
+
+
 fortune_starsign = re.compile('[ㄱ-ㅣ가-힣]+자리')
 fortune_zodiac = re.compile('[ㄱ-ㅣ가-힣]+띠') #뱀ㅁ띠 -> 이런것도 인식되는데 바꿔야하나?
 currencyname = re.compile(r"""
@@ -44,6 +55,13 @@ regexes = {
     '@sys.date.period' : date_period,
     '@sys.date.lunar' : date_lunar,
     '@sys.date.period.lunars' : date_period_lunar,
+    '@sys.number.ordinal': number_ordinal,
+    '@sys.number.age': number_age,
+    '@sys.number.birthyear': number_birthyear,
+    '@sys.number.rank': number_rank,
+    '@sys.number.decade': number_decade,
+    '@sys.unit.length': unit_length,
+    '@sys.unit.area': unit_area,
     '@sys.fortune.starsign' : fortune_starsign,
     '@sys.fortune.zodiac' : fortune_zodiac,
     '@sys.currencyname' : currencyname,
