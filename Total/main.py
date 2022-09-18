@@ -1,5 +1,4 @@
 import re
-print('ddd')
 text = input()
 
 date = re.compile(r"""
