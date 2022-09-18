@@ -21,14 +21,14 @@ date_lunar = re.compile(r"""
                         | 음력\s(설|추석)
                         """, re.VERBOSE)
 date_period_lunar = re.compile(r'음력\s\d+월')
-
-#time = re.compile('(정오)?(오전)?((\d+분|\d+시|\d+초)\s+뒤?)?')
-#time_period = re.compile(r'((오전|오후)?)*\s?((아침|점심|저녁)?)*\s?((\d+시부터\s?\d+시까지)?)*')
+#time = re.compile(r'(정오)?(오전)?((\d+분|\d+시|\d+초)\s+뒤?)?')
+#time_period = re.compile(r'((오전|오후)?)*\s?((아침|점심|저녁)?)*\s?((\d+시부터\s?\d+시까지)?)')
 #date_time = re.compile(r'(내일|현재|오늘|모레|(\d+월\s?\d일))?\s((오전|오후)?\s?((\d+시)?\s?(\d+분)?))?')
-#date_time_period=re.compile(r'(([월화수목금토일]요일)|오늘|내일|모레|글피|어[제|젯]|(\d+월\s?\d일))?\s?((낮|밤|저녁|오전|오후)?)*\s?((아침|점심|저녁)?)*\s?((\d+시부터\s?\d+시까지)?)*')
+#date_time_period=re.compile(r'(([월화수목금토일]요일)|오늘|내일|모레|글피|어[제|젯]|(\d+월\s?\d일))?\s?((낮|밤|저녁|오전|오후)?)*\s?((아침|점심|저녁)?)*\s?((\d+시부터\s?\d+시까지)?)')
 #number=re.compile(r'((일|이|삼|사|오|육|칠|팔|구|십)?|(하나|둘|셋|넷|다섯|여섯|일곱|여덟|아홉)?)*(((\d+)(명|개))?((하나|둘|셋|넷|다섯|여섯|일곱|여덟|아홉)\s?(명|개))?)*(열명|열개)?')
-#number_times=re.compile(r'(\d+(화|부|편|차|회|회차))*')
-#number_percent=re.compile(r'(\d+(퍼센트|프로|%))*')
+#number_times=re.compile(r'(\d+(화|부|편|차|회|회차))')
+#number_percent=re.compile(r'(\d+(퍼센트|프로|%))')
+
 
 number_ordinal = re.compile('(\d+번)|(첫?두?세?네?(열|(스[무|물])|(서른)|(마흔)|(쉰)|(예순)|(일흔)|(여든)|(아흔))?\s?[한두세네]?(다섯)?(여섯)?(일곱)?(여덟)?(아홉)?\s?번째)')
 number_age = re.compile('(\d+[살세])|(((열)?(스[무물])?(서른)?(마흔)?(쉰)?(예순)?(일흔)?(여든)?(아흔)?)\s?([한두세네]*(다섯)?(여섯)?(일곱)?(여덟)?(아홉)?)\s?살)')
@@ -90,12 +90,13 @@ unit_energy = re.compile(r"""
 |(\d+줄|\d+칼로리|\d+킬로칼로리|\d+와트시|\d+킬로와트시|\d+마력|\d+에르그|\d+전자볼트)
 |(\d+electron Volt)
 """, re.VERBOSE)
+# 1Mhz는 1000kHz 입니다 -> 안잡힘
 
 unit_currency = re.compile(r"""
 (\d+원|\d+달러|\d+위안|\d+센트|\d+파운드|\d+엔|\d+유로|\d+프랑|\d+루피)
 |(\S+원|\S+달러|\S+위안|\S+센트|\S+파운드|\S+엔|\S+유로|\S+프랑|\S+루피)
 """, re.VERBOSE)
-
+#돼?1파운드 잡힘
 fortune_starsign = re.compile('[양|황소|쌍둥이|게|사자|처녀|천칭|전갈|궁수|염소|물병|물고기]+자리')
 fortune_zodiac = re.compile('[쥐|소|호랑이|토끼|용|뱀|말|양|원숭이|닭|개|돼지]+띠')
 currencyname = re.compile(r"""
@@ -104,11 +105,15 @@ currencyname = re.compile(r"""
                           |([ㄱ-ㅣ가-힣]+페소)
                           |([ㄱ-ㅣ가-힣]+실링)
                           """, re.VERBOSE)
+#달러 못잡음
+#엔 -> @sys.currencyname  @sys.unit.currency 두 개 잡힘
 currency_code = re.compile('[A-Z]{3}')
 url = re.compile('(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?')
 bussiness_number = re.compile('[0-9]{3}-[0-9]{2}-[0-9]{5}]')
+#카카오의 사업자등록번호는 120-81-47521 입니다.  -> 안잡힘
 phone_number = re.compile('01[0|1|6|7|8|9?]-?[0-9]{4}-?[0-9]{4}')
 licenseplate_number = re.compile('[0-9]{2,3}\s[ㄱ-ㅣ가-힣][0-9]{4}')
+#차량번호는 12 가 1234 입니다.123 가 1234 번호가 제 차량입니다. -> 안잡힘
 
 regexes = {
     #최장 내용으로 대치하는 부분이 이 우선순위로 처리가 가능한가? 불가능하다면 다른 방안 고민..
@@ -134,12 +139,13 @@ regexes = {
 
     '@sys.unit.weight' : unit_weight,
     '@sys.unit.volume' :unit_volume,
-    '@sys.unit.pressure' :unit_pressure,
+    '@sys.unit.pressure':unit_pressure,
     '@sys.unit.temperature' : unit_temperature,
     '@sys.unit.speed' : unit_speed,
     '@sys.unit.data' : unit_data,
     '@sys.unit.energy' :unit_energy,
     '@sys.unit.currency' : unit_currency,
+
 
     '@sys.fortune.starsign' : fortune_starsign,
     '@sys.fortune.zodiac' : fortune_zodiac,
@@ -164,11 +170,21 @@ def priRegex(text):
         m = v.finditer(text)
 
         for i in m:
-            tagged_sentence = tagged_sentence.replace((text[i.start():i.end()]), k)
-            entitiy_name_list.append(k)  # entitiy name에 추가
-            value.append(i.group()) #date value 수정 필요
-            start_idx.append(i.start())
-            end_idx.append(i.end()-1)
+
+            if i.start() in start_idx: #최단 지우고, 최장으로 변경
+                idx = start_idx.index(i.start())
+                tagged_sentence = tagged_sentence.replace(entitiy_name_list[idx], value[idx]) #entity -> 원래 value로 치환
+                value[idx]= i.group() #value 리스트 수정
+                entitiy_name_list[idx] = k #entity 리스트 수정
+                end_idx[idx] = i.end() - 1 #end_idx 갱신
+                tagged_sentence = tagged_sentence.replace((text[i.start():i.end()]), k) #tagged_sentence 수정
+
+            else: #처음 추가
+                entitiy_name_list.append(k)
+                start_idx.append(i.start())
+                value.append(i.group())
+                end_idx.append(i.end()-1)
+                tagged_sentence = tagged_sentence.replace((text[i.start():i.end()]), k)
 
 
     for i in range(len(entitiy_name_list)):
@@ -177,6 +193,8 @@ def priRegex(text):
         print('start_idx = ',start_idx[i])
         print('end_idx = ',end_idx[i])
         print('----')
+
     print(tagged_sentence)
 
 priRegex(text)
+#1 톤 0.01 리터 등등 블랭크 추가
