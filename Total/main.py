@@ -82,6 +82,16 @@ energy1 = r"\d+J|\d+cal|\d+kcal|\d+Wh|\d+kWh|\d+eV|\d+erg"
 energy2 = r"\d+줄|\d+칼로리|\d+킬로칼로리|\d+와트시|\d+킬로와트시|\d+마력|\d+에르그|\d+전자볼트"
 energy3 = r"\d+electron Volt"
 
+currency = r"\d+원|\d+달러|\d+위안|\d+센트|\d+파운드|\d+엔|\d+유로|\d+프랑|\d+루피" \
+           r"\S+원|\S+달러|\S+위안|\S+센트|\S+파운드|\S+엔|\S+유로|\S+프랑|\S+루피"
+
+weight = weight1 +"|" + weight2 + "|" + weight3 + "|" + weight4
+volume = volume1 +"|" + volume2 + "|" + volume3 + "|" + volume4
+pressure = pressure1 +"|" + pressure2 + "|" + pressure3
+temperature = temperature1 +"|" + temperature2 + "|" + temperature3
+speed = speed1 +"|" + speed2 + "|" + speed3
+data = data1 +"|" + data2 + "|" + data3
+energy = energy1 +"|" + energy2 + "|" + energy3
 
 fortune_starsign = re.compile('[ㄱ-ㅣ가-힣]+자리')
 fortune_zodiac = re.compile('[ㄱ-ㅣ가-힣]+띠') #뱀ㅁ띠 -> 이런것도 인식되는데 바꿔야하나?
