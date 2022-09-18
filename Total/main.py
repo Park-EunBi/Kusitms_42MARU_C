@@ -43,44 +43,44 @@ unit_area = re.compile('\d+\.?\d*\s?((m²|(제곱미터))|(a|(아르))|(ha|(헥�
 
 
 #은비
-weight1 = r"mg|g|kg|t|kt|gr|oz|lb"
-weight2 = r"milligram|gram|kilogram|tonne|metric ton|kiloton|grain|ounce|pound"
-weight3 = r"밀리그램|그램|킬로그램|톤|킬로톤|그레인|온스|돈|냥|근|관"
-weight4 = r"錢|兩|斤|貫"
+weight1 = r"\d+mg|\d+g|\d+kg|\d+t|\d+kt|\d+gr|\d+oz|\d+lb"
+weight2 = r"\d+milligram|\d+gram|\d+kilogram|\d+tonne|\d+metric ton|\d+kiloton|\d+grain|\d+ounce|\d+pound"
+weight3 = r"\d+밀리그램|\d+그램|\d+킬로그램|\d+톤|\d+킬로톤|\d+그레인|\d+온스|\d+돈|\d+냥|\d+근|\d+관"
+weight4 = r"\d+錢|\d+兩|\d+斤|\d+貫"
 
-volume1 = r"cc|mℓ|ml|dℓ|dl|ℓ|l|cm3|m3|in3|ft3|yd3|gal|gallon|bbl|barrel|fl. oz.|fl|"
-volume2 = r"시시|밀리리터|데시리터|리터|세제곱센티미터|세제곱미터|세제곱인치|세제곱피트|" \
-          r"세제곱야드|갤런|배럴|액량 온스|홉|되|말|섬"
-volume3 = r"cubic centimeter|milliliters|deciliter|liter|cubic centimetre|fluid ounce|" \
-          r"gallon|barrel"
-volume4 = r"升|斗|苫"
+volume1 = r"\d+cc|\d+mℓ|\d+ml|\d+dℓ|\d+dl|\d+ℓ|\d+l|\d+cm3|\d+m3|\d+in3|\d+ft3|\d+yd3|\d+gal|\d+gallon|\d+bbl|\d+barrel|\d+fl. oz.|\d+fl|"
+volume2 = r"\d+시시|\d+밀리리터|\d+데시리터|\d+리터|\d+세제곱센티미터|\d+세제곱미터|\d+세제곱인치|\d+세제곱피트|" \
+          r"\d+세제곱야드|\d+갤런|\d+배럴|\d+액량 온스|\d+홉|\d+되|\d+말|\d+섬"
+volume3 = r"\d+cubic centimeter|\d+milliliters|\d+deciliter|\d+liter|\d+cubic centimetre|\d+fluid ounce|" \
+          r"\d+gallon|\d+barrel"
+volume4 = r"\d+升|\d+斗|\d+苫"
 
-pressure1 = r"atm|Pa|hPa|kPa|MPa|dyne/cm2|mb|bar|kgf/cm2|psi|mmHg|inchHg|mmH2O|inchH2O"
-pressure2 = r"기압|파스칼|헥토파스칼|킬로파스칼|메가파스칼|다인/제곱센티미터|밀리바|바|" \
-            r"킬로그램힘/제곱센티미터|프사이|수은주밀리미터|수은주인치|수주밀리미터|수주인치"
-pressure3 = r"atmospheric pressure|pascal|hectopascal|kilopascal|megapascal|dyne/square centimeters|" \
-            r"millibar|kgf/square centimeters|pound per square inch|millimeter of mercury|inch of mercury|" \
-            r"millimeter of water|inch of water"
+pressure1 = r"\d+atm|\d+Pa|\d+hPa|\d+kPa|\d+MPa|\d+dyne/cm2|\d+mb|\d+bar|\d+kgf/cm2|\d+psi|\d+mmHg|\d+inchHg|\d+mmH2O|\d+inchH2O"
+pressure2 = r"\d+기압|\d+파스칼|\d+헥토파스칼|\d+킬로파스칼|\d+메가파스칼|\d+다인/제곱센티미터|\d+밀리바|\d+바|" \
+            r"\d+킬로그램힘/제곱센티미터|\d+프사이|\d+수은주밀리미터|\d+수은주인치|\d+수주밀리미터|\d+수주인치"
+pressure3 = r"\d+atmospheric pressure|\d+pascal|\d+hectopascal|\d+kilopascal|\d+megapascal|\d+dyne/square centimeters|" \
+            r"\d+millibar|\d+kgf/square centimeters|\d+pound per square inch|\d+millimeter of mercury|\d+inch of mercury|" \
+            r"\d+millimeter of water|\d+inch of water"
 
-temperature1 = r"°C|°F|K|°R"
-temperature2 = r"섭씨온도|화씨온도절대온도|란씨온도"
-temperature3 = r"celsius|centigrade|fahrenheit scale|kelvin|rankine"
+temperature1 = r"\d+°C|\d+°F|\d+K|\d+°R"
+temperature2 = r"\d+섭씨온도|\d+화씨온도|\d+절대온도|\d+란씨온도"
+temperature3 = r"\d+celsius|\d+centigrade|\d+fahrenheit scale|\d+kelvin|\d+rankine"
 
-speed1 = r"m/s|m/h|km/s|km/h|in/s|in/h|ft/s|ft/h|mi/s|mi/h|kn|mach"
-speed2 = r"미터 매 초|미터 매 시|킬로미터 매 초|킬로미터 매 시|인치 매 초|인치 매 시|피트 매 초|피트 매 시|" \
-         r"마일 매 초|마일 매 시|노트|마하"
-speed3 = r"meter per second|meter per hour|kilometer per second|kilometer per hour|inch per second|inch per hour|" \
-         r"feet per second|feet per hour|mile per second|mile per hour|knot|mach"
+speed1 = r"\d+m/s\d+|m/h|\d+km/s|\d+km/h|\d+in/s|\d+in/h|\d+ft/s|\d+ft/h|\d+mi/s|\d+mi/h|\d+kn|\d+mach"
+speed2 = r"\d+미터 매 초|\d+미터 매 시|\d+킬로미터 매 초|\d+킬로미터 매 시|\d+인치 매 초|\d+인치 매 시|\d+피트 매 초|\d+피트 매 시|" \
+         r"\d+마일 매 초|\d+마일 매 시|\d+노트|\d+마하"
+speed3 = r"\d+meter per second|\d+meter per hour|\d+kilometer per second|\d+kilometer per hour|\d+inch per second|\d+inch per hour|" \
+         r"\d+feet per second|\d+feet per hour|\d+mile per second|\d+mile per hour|\d+knot|\d+mach"
 
-data1 = r"bit|B|KB|KiB|MB|MiB|GB|GiB|TB|TiB|PB|PiB|EB|EiB|ZB|ZiB|YB|YiB"
-data2 = r"비트|바이트|킬로바이트|키비바이트|메가바이트|메비바이트|기가바이트|기비바이트|테라바이트|테비바이트|" \
-        r"페타바이트|페비바이트|엑사바이트|엑비바이트|제타바이트|제비바이트|요타바이트|요비바이트"
-data3 = r"byte|kilobyte|kibibyte|megabyte|mebibyte|gigabyte|gibibyte|terabyte|tebibyte|petabyte|pebibyte|exabyte|" \
-        r"exbibyte|zettabyte|zebibyte|yottabyte|yobibyte"
+data1 = r"\d+it|\d+B|\d+KB|\d+KiB|\d+MB|\d+MiB|\d+GB|\d+GiB|\d+TB|\d+TiB|\d+PB|\d+PiB|\d+EB|\d+EiB|\d+ZB|\d+ZiB|\d+YB|\d+YiB"
+data2 = r"\d+비트|\d+바이트|\d+킬로바이트|\d+키비바이트|\d+메가바이트|\d+메비바이트|\d+기가바이트|\d+기비바이트|\d+테라바이트|\d+테비바이트|" \
+        r"\d+페타바이트|\d+페비바이트|\d+엑사바이트|\d+엑비바이트|\d+제타바이트|\d+제비바이트|\d+요타바이트|\d+요비바이트"
+data3 = r"\d+byte|\d+kilobyte|\d+kibibyte|\d+megabyte|\d+mebibyte|\d+gigabyte|\d+gibibyte|\d+terabyte|\d+tebibyte|\d+petabyte|\d+pebibyte|\d+exabyte|" \
+        r"\d+exbibyte|\d+zettabyte|\d+zebibyte|\d+yottabyte|\d+yobibyte"
 
-energy1 = r"J|cal|kcal|Wh|kWh|eV|erg"
-energy2 = r"줄|칼로리|킬로칼로리|와트시|킬로와트시|마력|에르그|전자볼트"
-energy3 = r"electron Volt"
+energy1 = r"\d+J|\d+cal|\d+kcal|\d+Wh|\d+kWh|\d+eV|\d+erg"
+energy2 = r"\d+줄|\d+칼로리|\d+킬로칼로리|\d+와트시|\d+킬로와트시|\d+마력|\d+에르그|\d+전자볼트"
+energy3 = r"\d+electron Volt"
 
 
 fortune_starsign = re.compile('[ㄱ-ㅣ가-힣]+자리')
