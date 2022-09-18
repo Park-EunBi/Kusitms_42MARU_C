@@ -1,5 +1,5 @@
 import re
-
+print('ddd')
 text = input()
 
 date = re.compile(r"""
@@ -16,7 +16,6 @@ date_period = re.compile(r"""
                         |((\d+년\s?)(\d+월\s?)?(\d+일\s?)?\s?부터\s(\d+년\s?)(\d+월\s?)?(\d+일\s?)?\s?까지)
                         |((\d+년\s?)(\d+월)?)
                         """, re.VERBOSE)
-#date_lunar = re.compile(r'음력\s(\d+년\s?)?(\d+월\s?)?(\d+일\s?)?') #올해 음력/ 음력 설 추가 필요
 date_lunar = re.compile(r"""
                         음력\s@sys.date.period #꼼수 쓸려헀는데 망함ㅎ 수정필요
                         | 음력\s@sys.date 
@@ -24,14 +23,13 @@ date_lunar = re.compile(r"""
                         """, re.VERBOSE)
 date_period_lunar = re.compile(r'음력\s\d+월')
 
-
-time=re.compile(r'(정오)?(오전)?((\d+분|\d+시|\d+초)\s+뒤?)?')
-time_period=re.compile(r'((오전|오후)?)*\s?((아침|점심|저녁)?)*\s?((\d+시부터\s?\d+시까지)?)*')
-date_time=re.compile(r'(내일|현재|오늘|모레|(\d+월\s?\d일))?\s((오전|오후)?\s?((\d+시)?\s?(\d+분)?))?')
-date_time_period=re.compile(r'(([월화수목금토일]요일)|오늘|내일|모레|글피|어[제|젯]|(\d+월\s?\d일))?\s?((낮|밤|저녁|오전|오후)?)*\s?((아침|점심|저녁)?)*\s?((\d+시부터\s?\d+시까지)?)*')
-number=re.compile(r'((일|이|삼|사|오|육|칠|팔|구|십)?|(하나|둘|셋|넷|다섯|여섯|일곱|여덟|아홉)?)*(((\d+)(명|개))?((하나|둘|셋|넷|다섯|여섯|일곱|여덟|아홉)\s?(명|개))?)*(열명|열개)?')
-number_times=re.compile(r'(\d+(화|부|편|차|회|회차))*')
-number_percent=re.compile(r'(\d+(퍼센트|프로|%))*')
+#time = re.compile('(정오)?(오전)?((\d+분|\d+시|\d+초)\s+뒤?)?')
+#time_period = re.compile(r'((오전|오후)?)*\s?((아침|점심|저녁)?)*\s?((\d+시부터\s?\d+시까지)?)*')
+#date_time = re.compile(r'(내일|현재|오늘|모레|(\d+월\s?\d일))?\s((오전|오후)?\s?((\d+시)?\s?(\d+분)?))?')
+#date_time_period=re.compile(r'(([월화수목금토일]요일)|오늘|내일|모레|글피|어[제|젯]|(\d+월\s?\d일))?\s?((낮|밤|저녁|오전|오후)?)*\s?((아침|점심|저녁)?)*\s?((\d+시부터\s?\d+시까지)?)*')
+#number=re.compile(r'((일|이|삼|사|오|육|칠|팔|구|십)?|(하나|둘|셋|넷|다섯|여섯|일곱|여덟|아홉)?)*(((\d+)(명|개))?((하나|둘|셋|넷|다섯|여섯|일곱|여덟|아홉)\s?(명|개))?)*(열명|열개)?')
+#number_times=re.compile(r'(\d+(화|부|편|차|회|회차))*')
+#number_percent=re.compile(r'(\d+(퍼센트|프로|%))*')
 
 number_ordinal = re.compile('(\d+번)|(첫?두?세?네?(열|(스[무|물])|(서른)|(마흔)|(쉰)|(예순)|(일흔)|(여든)|(아흔))?\s?[한두세네]?(다섯)?(여섯)?(일곱)?(여덟)?(아홉)?\s?번째)')
 number_age = re.compile('(\d+[살세])|(((열)?(스[무물])?(서른)?(마흔)?(쉰)?(예순)?(일흔)?(여든)?(아흔)?)\s?([한두세네]*(다섯)?(여섯)?(일곱)?(여덟)?(아홉)?)\s?살)')
@@ -40,61 +38,67 @@ number_rank = re.compile('\d+[등위]')
 number_decade = re.compile('\d{1,4}년대')
 unit_length = re.compile('\d+\.?\d*\s?((mm|(밀리미터))|((?!cm²)cm|(센티미터))|((?!m²)m|(미터))|((?!km²)km|(킬로미터))|(in|(인치))|((?!ft²)ft|(피트))|((?!yd²)yd|(야드))|(ch|(체인))|(fur|(펄롱))|(mile|(마일)))')
 unit_area = re.compile('\d+\.?\d*\s?((m²|(제곱미터))|(a|(아르))|(ha|(헥타르|(헥타아르)))|(km²|(제곱킬로미터))|(ft²|(제곱피트))|(yd²|(제곱야드))|(ac|(에이커))|(평)|(단)|(정))')
-
-
 #은비
-weight1 = r"\d+mg|\d+g|\d+kg|\d+t|\d+kt|\d+gr|\d+oz|\d+lb"
-weight2 = r"\d+milligram|\d+gram|\d+kilogram|\d+tonne|\d+metric ton|\d+kiloton|\d+grain|\d+ounce|\d+pound"
-weight3 = r"\d+밀리그램|\d+그램|\d+킬로그램|\d+톤|\d+킬로톤|\d+그레인|\d+온스|\d+돈|\d+냥|\d+근|\d+관"
-weight4 = r"\d+錢|\d+兩|\d+斤|\d+貫"
+unit_weight = re.compile(r"""
+    \d+mg|\d+g|\d+kg|\d+t|\d+kt|\d+gr|\d+oz|\d+lb
+    |\d+milligram|\d+gram|\d+kilogram|\d+tonne|\d+metric ton|\d+kiloton|\d+grain|\d+ounce|\d+pound
+    |\d+밀리그램|\d+그램|\d+킬로그램|\d+톤|\d+킬로톤|\d+그레인|\d+온스|\d+돈|\d+냥|\d+근|\d+관
+    |\d+錢|\d+兩|\d+斤|\d+貫
+""", re.VERBOSE)
 
-volume1 = r"\d+cc|\d+mℓ|\d+ml|\d+dℓ|\d+dl|\d+ℓ|\d+l|\d+cm3|\d+m3|\d+in3|\d+ft3|\d+yd3|\d+gal|\d+gallon|\d+bbl|\d+barrel|\d+fl. oz.|\d+fl|"
-volume2 = r"\d+시시|\d+밀리리터|\d+데시리터|\d+리터|\d+세제곱센티미터|\d+세제곱미터|\d+세제곱인치|\d+세제곱피트|" \
-          r"\d+세제곱야드|\d+갤런|\d+배럴|\d+액량 온스|\d+홉|\d+되|\d+말|\d+섬"
-volume3 = r"\d+cubic centimeter|\d+milliliters|\d+deciliter|\d+liter|\d+cubic centimetre|\d+fluid ounce|" \
-          r"\d+gallon|\d+barrel"
-volume4 = r"\d+升|\d+斗|\d+苫"
+unit_volume = re.compile(r"""
+(\d+cc|\d+mℓ|\d+ml|\d+dℓ|\d+dl|\d+ℓ|\d+l|\d+cm3|\d+m3|\d+in3|\d+ft3|\d+yd3|\d+gal|\d+gallon|\d+bbl|\d+barrel|\d+fl. oz.|\d+fl)
+|(\d+시시|\d+밀리리터|\d+데시리터|\d+리터|\d+세제곱센티미터|\d+세제곱미터|\d+세제곱인치|\d+세제곱피트)
+|(\d+세제곱야드|\d+갤런|\d+배럴|\d+액량 온스|\d+홉|\d+되|\d+말|\d+섬)
+|(\d+cubic centimeter|\d+milliliters|\d+deciliter|\d+liter|\d+cubic centimetre|\d+fluid ounce)
+|(\d+gallon|\d+barrel)
+|(\d+升|\d+斗|\d+苫)
+""", re.VERBOSE)
 
-pressure1 = r"\d+atm|\d+Pa|\d+hPa|\d+kPa|\d+MPa|\d+dyne/cm2|\d+mb|\d+bar|\d+kgf/cm2|\d+psi|\d+mmHg|\d+inchHg|\d+mmH2O|\d+inchH2O"
-pressure2 = r"\d+기압|\d+파스칼|\d+헥토파스칼|\d+킬로파스칼|\d+메가파스칼|\d+다인/제곱센티미터|\d+밀리바|\d+바|" \
-            r"\d+킬로그램힘/제곱센티미터|\d+프사이|\d+수은주밀리미터|\d+수은주인치|\d+수주밀리미터|\d+수주인치"
-pressure3 = r"\d+atmospheric pressure|\d+pascal|\d+hectopascal|\d+kilopascal|\d+megapascal|\d+dyne/square centimeters|" \
-            r"\d+millibar|\d+kgf/square centimeters|\d+pound per square inch|\d+millimeter of mercury|\d+inch of mercury|" \
-            r"\d+millimeter of water|\d+inch of water"
+unit_pressure = re.compile(r"""
+(\d+atm|\d+Pa|\d+hPa|\d+kPa|\d+MPa|\d+dyne/cm2|\d+mb|\d+bar|\d+kgf/cm2|\d+psi|\d+mmHg|\d+inchHg|\d+mmH2O|\d+inchH2O)
+|(\d+기압|\d+파스칼|\d+헥토파스칼|\d+킬로파스칼|\d+메가파스칼|\d+다인/제곱센티미터|\d+밀리바|\d+바)
+|(\d+킬로그램힘/제곱센티미터|\d+프사이|\d+수은주밀리미터|\d+수은주인치|\d+수주밀리미터|\d+수주인치)
+|(\d+atmospheric pressure|\d+pascal|\d+hectopascal|\d+kilopascal|\d+megapascal|\d+dyne/square centimeters)
+|(\d+millibar|\d+kgf/square centimeters|\d+pound per square inch|\d+millimeter of mercury|\d+inch of mercury)
+|(\d+millimeter of water|\d+inch of water)
+""", re.VERBOSE)
 
-temperature1 = r"\d+°C|\d+°F|\d+K|\d+°R"
-temperature2 = r"\d+섭씨온도|\d+화씨온도|\d+절대온도|\d+란씨온도|\d+도"
-temperature3 = r"\d+celsius|\d+centigrade|\d+fahrenheit scale|\d+kelvin|\d+rankine"
+unit_temperature = re.compile(r"""
+(\d+°C|\d+°F|\d+K|\d+°R)
+|(\d+섭씨온도|\d+화씨온도|\d+절대온도|\d+란씨온도|\d+도)
+|(\d+celsius|\d+centigrade|\d+fahrenheit scale|\d+kelvin|\d+rankine)
+""", re.VERBOSE)
 
-speed1 = r"\d+m/s\d+|m/h|\d+km/s|\d+km/h|\d+in/s|\d+in/h|\d+ft/s|\d+ft/h|\d+mi/s|\d+mi/h|\d+kn|\d+mach"
-speed2 = r"\d+미터 매 초|\d+미터 매 시|\d+킬로미터 매 초|\d+킬로미터 매 시|\d+인치 매 초|\d+인치 매 시|\d+피트 매 초|\d+피트 매 시|" \
-         r"\d+마일 매 초|\d+마일 매 시|\d+노트|\d+마하"
-speed3 = r"\d+meter per second|\d+meter per hour|\d+kilometer per second|\d+kilometer per hour|\d+inch per second|\d+inch per hour|" \
-         r"\d+feet per second|\d+feet per hour|\d+mile per second|\d+mile per hour|\d+knot|\d+mach"
+unit_speed = re.compile(r"""
+(\d+m/s\d+|m/h|\d+km/s|\d+km/h|\d+in/s|\d+in/h|\d+ft/s|\d+ft/h|\d+mi/s|\d+mi/h|\d+kn|\d+mach)
+|(\d+미터 매 초|\d+미터 매 시|\d+킬로미터 매 초|\d+킬로미터 매 시|\d+인치 매 초|\d+인치 매 시|\d+피트 매 초|\d+피트 매 시)
+|(\d+마일 매 초|\d+마일 매 시|\d+노트|\d+마하)
+|(\d+meter per second|\d+meter per hour|\d+kilometer per second|\d+kilometer per hour|\d+inch per second|\d+inch per hour)
+|(\d+feet per second|\d+feet per hour|\d+mile per second|\d+mile per hour|\d+knot|\d+mach)
+""", re.VERBOSE)
 
-data1 = r"\d+it|\d+B|\d+KB|\d+KiB|\d+MB|\d+MiB|\d+GB|\d+GiB|\d+TB|\d+TiB|\d+PB|\d+PiB|\d+EB|\d+EiB|\d+ZB|\d+ZiB|\d+YB|\d+YiB"
-data2 = r"\d+비트|\d+바이트|\d+킬로바이트|\d+키비바이트|\d+메가바이트|\d+메비바이트|\d+기가바이트|\d+기비바이트|\d+테라바이트|\d+테비바이트|" \
-        r"\d+페타바이트|\d+페비바이트|\d+엑사바이트|\d+엑비바이트|\d+제타바이트|\d+제비바이트|\d+요타바이트|\d+요비바이트"
-data3 = r"\d+byte|\d+kilobyte|\d+kibibyte|\d+megabyte|\d+mebibyte|\d+gigabyte|\d+gibibyte|\d+terabyte|\d+tebibyte|\d+petabyte|\d+pebibyte|\d+exabyte|" \
-        r"\d+exbibyte|\d+zettabyte|\d+zebibyte|\d+yottabyte|\d+yobibyte"
+unit_data = re.compile(r"""
+(\d+it|\d+B|\d+KB|\d+KiB|\d+MB|\d+MiB|\d+GB|\d+GiB|\d+TB|\d+TiB|\d+PB|\d+PiB|\d+EB|\d+EiB|\d+ZB|\d+ZiB|\d+YB|\d+YiB)
+|(\d+비트|\d+바이트|\d+킬로바이트|\d+키비바이트|\d+메가바이트|\d+메비바이트|\d+기가바이트|\d+기비바이트|\d+테라바이트|\d+테비바이트)
+|(\d+페타바이트|\d+페비바이트|\d+엑사바이트|\d+엑비바이트|\d+제타바이트|\d+제비바이트|\d+요타바이트|\d+요비바이트)
+|(\d+byte|\d+kilobyte|\d+kibibyte|\d+megabyte|\d+mebibyte|\d+gigabyte|\d+gibibyte|\d+terabyte|\d+tebibyte|\d+petabyte|\d+pebibyte|\d+exabyte)
+|(\d+exbibyte|\d+zettabyte|\d+zebibyte|\d+yottabyte|\d+yobibyte)
+""", re.VERBOSE)
 
-energy1 = r"\d+J|\d+cal|\d+kcal|\d+Wh|\d+kWh|\d+eV|\d+erg"
-energy2 = r"\d+줄|\d+칼로리|\d+킬로칼로리|\d+와트시|\d+킬로와트시|\d+마력|\d+에르그|\d+전자볼트"
-energy3 = r"\d+electron Volt"
+unit_energy = re.compile(r"""
+(\d+J|\d+cal|\d+kcal|\d+Wh|\d+kWh|\d+eV|\d+erg)
+|(\d+줄|\d+칼로리|\d+킬로칼로리|\d+와트시|\d+킬로와트시|\d+마력|\d+에르그|\d+전자볼트)
+|(\d+electron Volt)
+""", re.VERBOSE)
 
-currency = r"\d+원|\d+달러|\d+위안|\d+센트|\d+파운드|\d+엔|\d+유로|\d+프랑|\d+루피" \
-           r"\S+원|\S+달러|\S+위안|\S+센트|\S+파운드|\S+엔|\S+유로|\S+프랑|\S+루피"
+unit_currency = re.compile(r"""
+(\d+원|\d+달러|\d+위안|\d+센트|\d+파운드|\d+엔|\d+유로|\d+프랑|\d+루피)
+|(\S+원|\S+달러|\S+위안|\S+센트|\S+파운드|\S+엔|\S+유로|\S+프랑|\S+루피)
+""", re.VERBOSE)
 
-weight = weight1 +"|" + weight2 + "|" + weight3 + "|" + weight4
-volume = volume1 +"|" + volume2 + "|" + volume3 + "|" + volume4
-pressure = pressure1 +"|" + pressure2 + "|" + pressure3
-temperature = temperature1 +"|" + temperature2 + "|" + temperature3
-speed = speed1 +"|" + speed2 + "|" + speed3
-data = data1 +"|" + data2 + "|" + data3
-energy = energy1 +"|" + energy2 + "|" + energy3
-
-fortune_starsign = re.compile('[ㄱ-ㅣ가-힣]+자리')
-fortune_zodiac = re.compile('[ㄱ-ㅣ가-힣]+띠') #뱀ㅁ띠 -> 이런것도 인식되는데 바꿔야하나?
+fortune_starsign = re.compile('[양|황소|쌍둥이|게|사자|처녀|천칭|전갈|궁수|염소|물병|물고기]+자리')
+fortune_zodiac = re.compile('[쥐|소|호랑이|토끼|용|뱀|말|양|원숭이|닭|개|돼지]+띠')
 currencyname = re.compile(r"""
                           ([ㄱ-ㅣ가-힣]+달러)
                           |(엔|유로|위안|파운드)
@@ -114,6 +118,13 @@ regexes = {
     '@sys.date.period' : date_period,
     '@sys.date.lunar' : date_lunar,
     '@sys.date.period.lunars' : date_period_lunar,
+    #'@sys.time' : time,
+    #'@sys.time.period' : time_period,
+    #'@sys.date.time' : date_time,
+    #'@sys.date.time.period' : date_time_period,
+    #'@sys.number' : number,
+    #'@sys.number.times' : number_times,
+    #'@sys.number.percent' : number_percent,
     '@sys.number.ordinal': number_ordinal,
     '@sys.number.age': number_age,
     '@sys.number.birthyear': number_birthyear,
@@ -121,6 +132,16 @@ regexes = {
     '@sys.number.decade': number_decade,
     '@sys.unit.length': unit_length,
     '@sys.unit.area': unit_area,
+
+    '@sys.unit.weight' : unit_weight,
+    '@sys.unit.volume' :unit_volume,
+    '@sys.unit.pressure' :unit_pressure,
+    '@sys.unit.temperature' : unit_temperature,
+    '@sys.unit.speed' : unit_speed,
+    '@sys.unit.data' : unit_data,
+    '@sys.unit.energy' :unit_energy,
+    '@sys.unit.currency' : unit_currency,
+
     '@sys.fortune.starsign' : fortune_starsign,
     '@sys.fortune.zodiac' : fortune_zodiac,
     '@sys.currencyname' : currencyname,
@@ -142,9 +163,9 @@ def priRegex(text):
     for k, v in list(regexes.items()):
 
         m = v.finditer(text)
+
         for i in m:
             tagged_sentence = tagged_sentence.replace((text[i.start():i.end()]), k)
-
             entitiy_name_list.append(k)  # entitiy name에 추가
             value.append(i.group()) #date value 수정 필요
             start_idx.append(i.start())
@@ -157,5 +178,6 @@ def priRegex(text):
         print('start_idx = ',start_idx[i])
         print('end_idx = ',end_idx[i])
         print('----')
+    print(tagged_sentence)
 
 priRegex(text)
