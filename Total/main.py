@@ -63,7 +63,7 @@ pressure3 = r"\d+atmospheric pressure|\d+pascal|\d+hectopascal|\d+kilopascal|\d+
             r"\d+millimeter of water|\d+inch of water"
 
 temperature1 = r"\d+°C|\d+°F|\d+K|\d+°R"
-temperature2 = r"\d+섭씨온도|\d+화씨온도|\d+절대온도|\d+란씨온도"
+temperature2 = r"\d+섭씨온도|\d+화씨온도|\d+절대온도|\d+란씨온도|\d+도"
 temperature3 = r"\d+celsius|\d+centigrade|\d+fahrenheit scale|\d+kelvin|\d+rankine"
 
 speed1 = r"\d+m/s\d+|m/h|\d+km/s|\d+km/h|\d+in/s|\d+in/h|\d+ft/s|\d+ft/h|\d+mi/s|\d+mi/h|\d+kn|\d+mach"
