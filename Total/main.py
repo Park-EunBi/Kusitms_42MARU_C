@@ -180,7 +180,7 @@ def priRegex(text):
 
         print(tagged_sentence)
 
-    '''
+'''
     for entity in entitiy_name_list:
         if entity == '@sys.date':
             idx = entitiy_name_list.index(entity)
@@ -192,8 +192,6 @@ def priRegex(text):
                     value[idx] = someValue[1:-1] + " 00:00:00"
                 else:
                     value[idx] = someValue[0:-1] + " 00:00:00"
-
 '''
-
 
 priRegex(text)
