@@ -1,26 +1,11 @@
 import re
 text = input()
 
-date = re.compile(r"""
-                (오늘|내일|어제|금일) #오늘
-                |(\d+년\s\d+월\s\d+일) #날짜
-                |(\d+월\s\d+일) #월
-                |([ㄱ-ㅣ가-힣]요일)#요일
-                """, re.VERBOSE)
-date_period = re.compile(r"""
-                        (이번[주해월])
-                        |(다음[주해월])
-                        |(저번[주해월])
-                        |(올해|작년|내년|전년|주말|평일|내후년)
-                        |((\d+년\s?)(\d+월\s?)?(\d+일\s?)?\s?부터\s(\d+년\s?)(\d+월\s?)?(\d+일\s?)?\s?까지)
-                        |((\d+년\s?)(\d+월)?)
-                        """, re.VERBOSE)
-date_lunar = re.compile(r"""
-                        음력\s@sys.date.period #꼼수 쓸려헀는데 망함ㅎ 수정필요
-                        | 음력\s@sys.date 
-                        | 음력\s(설|추석)
-                        """, re.VERBOSE)
-date_period_lunar = re.compile(r'음력\s\d+월')
+date=re.compile(r'(어제|오늘|금일|내일|모레|글피)|\d+년\s\d+월\s\d+일|\d+월\s\d+일|[월화수목금토일]요일')
+date_period=re.compile(r'(이번\s?[주해월])|(다음\s?[주해월])|(저번\s?[주해월])|(올해|작년|내년|전년|주말|평일|내후년)|\d{4}년|\d+월|\d+일부터\s\d+일까지')
+date_lunar=re.compile(r'음력\s?\d+년\s?\d+월\s?\d+일|(올해)?\s?음력\s?\d+월\s?\d+일|음력\s?(추석|설날)')
+date_period_lunar=re.compile(r'음력\s\d+월')
+
 
 #time = re.compile(r'(정오)?(오전)?((\d+분|\d+시|\d+초)\s+뒤?)?')
 #time_period = re.compile(r'((오전|오후)?)*\s?((아침|점심|저녁)?)*\s?((\d+시부터\s?\d+시까지)?)')
@@ -98,8 +83,8 @@ unit_currency = re.compile(r"""
 """, re.VERBOSE)
 #돼?1파운드 잡힘 -> 왜 \S지??
 
-fortune_starsign = re.compile('[양|황소|쌍둥이|게|사자|처녀|천칭|전갈|궁수|염소|물병|물고기]+자리')
-fortune_zodiac = re.compile('[쥐|소|호랑이|토끼|용|뱀|말|양|원숭이|닭|개|돼지]+띠')
+fortune_starsign = re.compile('[양|황소|쌍둥이|게|사자|처녀|천칭|전갈|궁수|염소|물병|물고기]자리')
+fortune_zodiac = re.compile('[쥐|소|호랑이|토끼|용|뱀|말|양|원숭이|닭|개|돼지]띠')
 currencyname = re.compile(r"""
                           ([ㄱ-ㅣ가-힣]+달러)
                           |(엔|유로|위안|파운드)
@@ -117,11 +102,10 @@ phone_number = re.compile('01[0|1|6|7|8|9?]-?[0-9]{4}-?[0-9]{4}')
 licenseplate_number = re.compile(r'\d{2,3}\s?[ㄱ-ㅣ가-힣]\s?\d{4}')
 
 regexes = {
-
+    '@sys.date.lunar': date_lunar,
+    '@sys.date.period.lunars': date_period_lunar,
     '@sys.date' : date,
-    '@sys.date.period' : date_period,
-    '@sys.date.lunar' : date_lunar,
-    '@sys.date.period.lunars' : date_period_lunar,
+    '@sys.date.period': date_period,
     #'@sys.time' : time,
     #'@sys.time.period' : time_period,
     #'@sys.date.time' : date_time,
@@ -172,8 +156,11 @@ def priRegex(text):
 
             if i.start() in start_idx: #최단 지우고, 최장으로 변경
                 idx = start_idx.index(i.start())
+                if end_idx[idx] >= i.end()-1:
+                    continue
                 tagged_sentence = tagged_sentence.replace(entitiy_name_list[idx], value[idx]) #entity -> 원래 value로 치환
-                value[idx]= i.group() #value 리스트 수정
+                print(i.group())
+                value[idx] = i.group() #value 리스트 수정
                 entitiy_name_list[idx] = k #entity 리스트 수정
                 end_idx[idx] = i.end() - 1 #end_idx 갱신
                 tagged_sentence = tagged_sentence.replace((text[i.start():i.end()]), k) #tagged_sentence 수정
@@ -184,34 +171,29 @@ def priRegex(text):
                 value.append(i.group())
                 end_idx.append(i.end()-1)
                 tagged_sentence = tagged_sentence.replace((text[i.start():i.end()]), k)
+        for i in range(len(entitiy_name_list)):
+            print('entitiy name =', entitiy_name_list[i])
+            print('value = ', value[i])
+            print('start_idx = ', start_idx[i])
+            print('end_idx = ', end_idx[i])
+            print('----')
 
+        print(tagged_sentence)
 
-    for i in range(len(entitiy_name_list)):
-        print('entitiy name =', entitiy_name_list[i])
-        print('value = ', value[i])
-        print('start_idx = ',start_idx[i])
-        print('end_idx = ',end_idx[i])
-        print('----')
+    '''
+    for entity in entitiy_name_list:
+        if entity == '@sys.date':
+            idx = entitiy_name_list.index(entity)
+            if value[idx].match(r'(어제|오늘|금일|내일|모레|글피)|\d+월\s\d+일|[월화수목금토일]요일'):
+                continue
+            else:
+                someValue = re.sub('-', value[idx])
+                if someValue[0] == '-':
+                    value[idx] = someValue[1:-1] + " 00:00:00"
+                else:
+                    value[idx] = someValue[0:-1] + " 00:00:00"
 
-    print(tagged_sentence)
+'''
+
 
 priRegex(text)
-'''
-    print("entity_name: @{name}".format(name=sys._getframe().f_code.co_name)) #entity_name
-    p = re.compile('올해|년|작년|월|일') #대체 대상 추가 가능
-    someValue =p.sub('-',value)
-    if someValue[0] is '-':
-        someNewValue = someValue[1:-1]+" 00:00:00"
-    else:
-        someNewValue = someValue[0:-1]+" 00:00:00"
-    print("value: "+ someNewValue)           #value
-    
-    print("start_idx: "+str(match.start()))  #start_idx
-    print("end_idx: "+str(match.end()))      #end_idx 
-    
-    #print("tagged_sentence:")      
-    
-    #value값들 List자료로 묶어서취합 
-sys_date()
-
-'''
