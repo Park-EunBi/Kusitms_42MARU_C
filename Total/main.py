@@ -182,27 +182,27 @@ def priRegex(text):
                 value.append(i.group())
                 end_idx.append(i.end()-1)
                 tagged_sentence = tagged_sentence.replace((text[i.start():i.end()]), k)
-        for i in range(len(entitiy_name_list)):
-            print('entitiy name =', entitiy_name_list[i])
-            print('value = ', value[i])
-            print('start_idx = ', start_idx[i])
-            print('end_idx = ', end_idx[i])
-            print('----')
 
-        print(tagged_sentence)
-
-'''
     for entity in entitiy_name_list:
         if entity == '@sys.date':
             idx = entitiy_name_list.index(entity)
-            if value[idx].match(r'(어제|오늘|금일|내일|모레|글피)|\d+월\s\d+일|[월화수목금토일]요일'):
+            p = re.compile(r'(어제|오늘|금일|내일|모레|글피)|\d+월\s\d+일|[월화수목금토일]요일')
+            if p.match(value[idx]):
                 continue
             else:
-                someValue = re.sub('-', value[idx])
-                if someValue[0] == '-':
-                    value[idx] = someValue[1:-1] + " 00:00:00"
-                else:
-                    value[idx] = someValue[0:-1] + " 00:00:00"
-'''
+                someValue = re.sub('[년월]\s?', '-', value[idx])
+                someValue = re.sub('일\s?', ' 00:00:00', value[idx])
+                value[idx] = someValue
+
+
+    for i in range(len(entitiy_name_list)):
+        print('entitiy name =', entitiy_name_list[i])
+        print('value = ', value[i])
+        print('start_idx = ', start_idx[i])
+        print('end_idx = ', end_idx[i])
+        print('----')
+
+    print(tagged_sentence)
+
 
 priRegex(text)
