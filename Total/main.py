@@ -1,28 +1,34 @@
 import re
 text = input()
 
+
+#1~4번 엔티티
 date=re.compile(r'(어제|오늘|금일|내일|모레|글피)|\d+년\s\d+월\s\d+일|\d+월\s\d+일|[월화수목금토일]요일')
-date_period=re.compile(r'(이번\s?[주해월])|(다음\s?[주해월])|(저번\s?[주해월])|(올해|작년|내년|전년|주말|평일|내후년)|\d{4}년|\d+월|\d+일부터\s\d+일까지')
+date_period=re.compile(r'(이번\s?[주해월])|(다음\s?[주해월])|(저번\s?[주해월])|(올해|작년|내년|전년|주말|평일|내후년)|\d+년|\d+월|\d+일부터\s\d+일까지')
 date_lunar=re.compile(r'음력\s?\d+년\s?\d+월\s?\d+일|(올해)?\s?음력\s?\d+월\s?\d+일|음력\s?(추석|설날)')
 date_period_lunar=re.compile(r'음력\s\d+월')
 
+#현준
+time=re.compile(r'(오전|오후|아침|점심|저녁|새벽)\s\d+시\s(\d+분)?반?|\d+분\s뒤|(\d+시)\s?\d+분|\d+시|\d+초|정오|자정')
+time_period=re.compile(r'\d+시(\s?\d+분)?\s?부터\s\d+시(\s?\d+분)?\s?까지|(오전|오후|아침|점심|저녁|새벽)')
+date_time=re.compile(r'(어제|오늘|내일|모레|글피)\s(오전|오후)?\s?\d+시|현재|\d+월\s?\d+일\s?(오전|오후|아침|점심|저녁|새벽)?\s?\d+시')
+date_time_period=re.compile(r'(어제|오늘|내일|모레|글피)\s\d+시부터\s\d+시까지|오늘[낮밤]|(어제|오늘|내일|모레|글피)\s(오전|오후|아침|점심|저녁|새벽)|[월화수목금토일]요일\s(오전|오후|아침|점심|저녁|새벽)|어제낮|어젯밤|오늘낮|오늘밤|내일밤|내일모레')
+number=re.compile(r'(하나|둘|셋|넷|다섯|여섯|일곱|여덟|아홉|열)(명|개)?|\b\d+\b|(?<=[^가-힣])(이|삼|사|오|육|칠|팔|구|십|하나|둘|셋|넷|다섯|여섯|일곱|여덟|아홉|열)(?=[^가-힣])')
+number_times=re.compile(r'\d+(화|부|편|차|회|회차)')
+number_percent=re.compile(r'(\d+(퍼센트|프로|%))|(일|이|삼|사|오|육|칠|팔|구|십|백)(일|이|삼|사|오|육|칠|팔|구|십|백)?(일|이|삼|사|오|육|칠|팔|구|십|백)?퍼센트')
 
-#time = re.compile(r'(정오)?(오전)?((\d+분|\d+시|\d+초)\s+뒤?)?')
-#time_period = re.compile(r'((오전|오후)?)*\s?((아침|점심|저녁)?)*\s?((\d+시부터\s?\d+시까지)?)')
-#date_time = re.compile(r'(내일|현재|오늘|모레|(\d+월\s?\d일))?\s((오전|오후)?\s?((\d+시)?\s?(\d+분)?))?')
-#date_time_period=re.compile(r'(([월화수목금토일]요일)|오늘|내일|모레|글피|어[제|젯]|(\d+월\s?\d일))?\s?((낮|밤|저녁|오전|오후)?)*\s?((아침|점심|저녁)?)*\s?((\d+시부터\s?\d+시까지)?)')
-#number=re.compile(r'((일|이|삼|사|오|육|칠|팔|구|십)?|(하나|둘|셋|넷|다섯|여섯|일곱|여덟|아홉)?)*(((\d+)(명|개))?((하나|둘|셋|넷|다섯|여섯|일곱|여덟|아홉)\s?(명|개))?)*(열명|열개)?')
-#number_times=re.compile(r'(\d+(화|부|편|차|회|회차))')
-#number_percent=re.compile(r'(\d+(퍼센트|프로|%))')
+
 
 
 number_ordinal = re.compile('(\d+번)|(첫?두?세?네?(열|(스[무|물])|(서른)|(마흔)|(쉰)|(예순)|(일흔)|(여든)|(아흔))?\s?[한두세네]?(다섯)?(여섯)?(일곱)?(여덟)?(아홉)?\s?번째)')
 number_age = re.compile('(\d+[살세])|(((열)?(스[무물])?(서른)?(마흔)?(쉰)?(예순)?(일흔)?(여든)?(아흔)?)\s?([한두세네]*(다섯)?(여섯)?(일곱)?(여덟)?(아홉)?)\s?살)')
 number_birthyear = re.compile('\d{1,4}년생')
 number_rank = re.compile('\d+[등위]')
+unit_duration = re.compile('(\d+(일|(주일)|(개월)|년)(\s?(동안))?)|(하루|이틀)|(([이|삼|사|오|육|칠|팔|구]십\s?)?[일|이|삼|사|오|육|칠|팔|구](일|(주일)|(개월)|년))|(\d+(시간)?\s?(\d+|반)?분?\s?\d*초?\s?동안)|(\d+(시간)?\s?(\d+|반)?분?\s?\d*초?\s?)')
 number_decade = re.compile('\d{1,4}년대')
 unit_length = re.compile('\d+\.?\d*\s?((mm|(밀리미터))|((?!cm²)cm|(센티미터))|((?!m²)m|(미터))|((?!km²)km|(킬로미터))|(in|(인치))|((?!ft²)ft|(피트))|((?!yd²)yd|(야드))|(ch|(체인))|(fur|(펄롱))|(mile|(마일)))')
 unit_area = re.compile('\d+\.?\d*\s?((m²|(제곱미터))|(a|(아르))|(ha|(헥타르|(헥타아르)))|(km²|(제곱킬로미터))|(ft²|(제곱피트))|(yd²|(제곱야드))|(ac|(에이커))|(평)|(단)|(정))')
+
 #은비
 unit_weight = re.compile(r"""
     \d+\s?mg|\d+\s?g|\d+\s?kg|\d+\s?t|\d+\s?kt|\d+\s?gr|\d+\s?oz|\d+\s?lb
@@ -105,18 +111,23 @@ regexes = {
     '@sys.date.lunar': date_lunar,
     '@sys.date.period.lunars': date_period_lunar,
     '@sys.date' : date,
-    '@sys.date.period': date_period,
-    #'@sys.time' : time,
-    #'@sys.time.period' : time_period,
-    #'@sys.date.time' : date_time,
-    #'@sys.date.time.period' : date_time_period,
-    #'@sys.number' : number,
-    #'@sys.number.times' : number_times,
-    #'@sys.number.percent' : number_percent,
+
+    '@sys.date.period' : date_period,
+    '@sys.date.lunar' : date_lunar,
+    '@sys.date.period.lunars' : date_period_lunar,
+    '@sys.time' : time,
+    '@sys.time.period' : time_period,
+    '@sys.date.time' : date_time,
+    '@sys.date.time.period' : date_time_period,
+    '@sys.number' : number,
+    '@sys.number.times' : number_times,
+    '@sys.number.percent' : number_percent,
+
     '@sys.number.ordinal': number_ordinal,
     '@sys.number.age': number_age,
     '@sys.number.birthyear': number_birthyear,
     '@sys.number.rank': number_rank,
+    '@sys.unit.duration' : unit_duration,
     '@sys.number.decade': number_decade,
     '@sys.unit.length': unit_length,
     '@sys.unit.area': unit_area,
