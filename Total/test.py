@@ -1,6 +1,14 @@
 import re
 import main
 from main import priRegex
+
+def test_Input_tagged_sentence():
+    Input = input()
+    Output = input()
+
+    Result = priRegex(Input)
+    assert Output == str(Result)
+
 '''
 def test_date():
     pattern = main.date
@@ -48,7 +56,7 @@ def test_date_period_lunar():
     for date_period_lunar in valid_date_period_lunar:
         assert re.match(pattern, date_period_lunar)
 
-'''
+
 
 def test_tagged_sentence():
     sentences = [
@@ -85,3 +93,4 @@ def test_tagged_sentence():
         assert Result[3] == end_idx[i], True
         assert Result[4] == tagged_sentence[i], True
         i+=1
+'''

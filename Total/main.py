@@ -205,7 +205,7 @@ def priRegex(text):
         print('----')
     '''
     result = [entitiy_name_list, value,start_idx, end_idx, tagged_sentence]
-    print(result)
+    #print(result)
     return result
 
 #priRegex(text)
