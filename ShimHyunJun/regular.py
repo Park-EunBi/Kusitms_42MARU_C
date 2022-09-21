@@ -1,4 +1,3 @@
-import redis
 weight1 = r"\d+mg|\d+g|\d+kg|\d+t|\d+kt|\d+gr|\d+oz|\d+lb"
 weight2 = r"\d+milligram|\d+gram|\d+kilogram|\d+tonne|\d+metric ton|\d+kiloton|\d+grain|\d+ounce|\d+pound"
 weight3 = r"\d+밀리그램|\d+그램|\d+킬로그램|\d+톤|\d+킬로톤|\d+그레인|\d+온스|\d+돈|\d+냥|\d+근|\d+관"
@@ -41,6 +40,16 @@ energy3 = r"\d+electron Volt"
 currency = r"\d+원|\d+달러|\d+위안|\d+센트|\d+파운드|\d+엔|\d+유로|\d+프랑|\d+루피" \
            r"\S+원|\S+달러|\S+위안|\S+센트|\S+파운드|\S+엔|\S+유로|\S+프랑|\S+루피"
 
+
+
+time1= r"(정오)?(오전)?((\d+분|\d+시|\d+초)\s+뒤?)?"
+time2= r"((오전|오후)?)*\s?((아침|점심|저녁)?)*\s?((\d+시부터\s?\d+시까지)?)*"
+time3= r"(내일|현재|오늘|모레|(\d+월\s?\d일))?\s((오전|오후)?\s?((\d+시)?\s?(\d+분)?))?"
+time4= r"(([월화수목금토일]요일)|오늘|내일|모레|글피|어[제|젯]|(\d+월\s?\d일))?\s?((낮|밤|저녁|오전|오후)?)*\s?((아침|점심|저녁)?)*\s?((\d+시부터\s?\d+시까지)?)*"
+
+date1=r"((\d*년?\s?)?(\d+월\s?)?(\d+일\s?))+|((작년)|(오늘)|(어제)|(모레)|(글피)|(내일))+|((월요일)|(화요일)|(수요일)|(목요일)|(금요일)|(토요일)|(일요일))+"
+
+
 weight = weight1 +"|" + weight2 + "|" + weight3 + "|" + weight4
 volume = volume1 +"|" + volume2 + "|" + volume3 + "|" + volume4
 pressure = pressure1 +"|" + pressure2 + "|" + pressure3
@@ -48,48 +57,10 @@ temperature = temperature1 +"|" + temperature2 + "|" + temperature3
 speed = speed1 +"|" + speed2 + "|" + speed3
 data = data1 +"|" + data2 + "|" + data3
 energy = energy1 +"|" + energy2 + "|" + energy3
+date= date1
+time= time1 +"|" + time2 + "|" + time3 + "|" + time4
 
 
-
-# Redis에 저장된 값 불러오기, 정규식 변환
-rd = redis.StrictRedis(host='localhost', port=6379, db=0, charset="utf-8", decode_responses=True)
-
-# 1. nation
-nation = rd.get("nation")
-# str 형식으로 받아와서
-# 정규식으로 변형하려면 list 로 변경해야 한다
-nation = nation.split(' ')
-re_nation = nation[0]
-for i in range(1, len(nation)):
-    re_nation = re_nation + "|" + nation[i]
-
-# 2. location - 국내 지역
-location = rd.get("location")
-location = location.split(' ')
-re_location = location[0]
-for i in range(1, len(location)):
-    re_location = re_location + "|" + location[i]
-
-# 3. state - 해외 주 단위
-states = rd.get("states")
-states = states.split(' ')
-re_states = states[0]
-for i in range(1, len(states)):
-    re_states = re_states + "|" + states[i-1]
-
-# 4. city - 해외 도시명
-city = rd.get("city")
-city = city.split(' ')
-re_city = city[0]
-for i in range(1, len(city)):
-    re_city = re_city + "|" + city[i]
-
-# 5.  currencyname - 통화명 (달러, 엔화 등등)
-currencyname = rd.get("currencyname")
-currencyname = currencyname.split(' ')
-re_currencyname = currencyname[0]
-for i in range(1, len(currencyname)):
-    re_currencyname = re_currencyname + "|" + currencyname[i]
 
 
 

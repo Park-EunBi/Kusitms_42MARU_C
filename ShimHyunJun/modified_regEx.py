@@ -17,9 +17,11 @@ def find_sys(sentence):
     data = re.compile(regular.data) # 미리 컴파일
     energy = re.compile(regular.energy) # 미리 컴파일
     currency = re.compile(regular.currency) # 미리 컴파일
+    time = re.compile(regular.time)
+    date = re.compile(regular.date)
 
-    sys_list = [weight, volume, pressure, temperature, speed, data, energy, currency]
-    sys_name = ["weight", "volume", "pressure", "temperature", "speed", "data", "energy", "currency"]
+    sys_list = [weight, volume, pressure, temperature, speed, data, energy, currency, time, date]
+    sys_name = ["weight", "volume", "pressure", "temperature", "speed", "data", "energy", "currency", "time", "date"]
 
     replace_sentence = sentence
     split_sentence = sentence.split()
@@ -41,11 +43,14 @@ def find_sys(sentence):
                 tagged_sentence = "@sys_{}".format(sys_name[i])
             word = tagged_sentence
             replace_sentence = replace_sentence.replace(value, word)
+            if (word=="date") is True:
+                txt = re.subn('(년|월|일)',tagged_sentence)
+                print(txt)
             final_result = [tagged_sentence, value, start_idx, end_idx, replace_sentence]
 
     return final_result
 
-sentence1 = "백달러는 1000원 인가요?"
+sentence1 = "2022년3월21일에 보낸 메일 찾아줘"
 sentence2 = "우유 100mg 사와"
 sentence3 = "1GB 메모리"
 
