@@ -1,3 +1,4 @@
+import redis
 weight1 = r"\d+mg|\d+g|\d+kg|\d+t|\d+kt|\d+gr|\d+oz|\d+lb"
 weight2 = r"\d+milligram|\d+gram|\d+kilogram|\d+tonne|\d+metric ton|\d+kiloton|\d+grain|\d+ounce|\d+pound"
 weight3 = r"\d+밀리그램|\d+그램|\d+킬로그램|\d+톤|\d+킬로톤|\d+그레인|\d+온스|\d+돈|\d+냥|\d+근|\d+관"
@@ -50,6 +51,45 @@ energy = energy1 +"|" + energy2 + "|" + energy3
 
 
 
+# Redis에 저장된 값 불러오기, 정규식 변환
+rd = redis.StrictRedis(host='localhost', port=6379, db=0, charset="utf-8", decode_responses=True)
+
+# 1. nation
+nation = rd.get("nation")
+# str 형식으로 받아와서
+# 정규식으로 변형하려면 list 로 변경해야 한다
+nation = nation.split(' ')
+re_nation = nation[0]
+for i in range(1, len(nation)):
+    re_nation = re_nation + "|" + nation[i]
+
+# 2. location - 국내 지역
+location = rd.get("location")
+location = location.split(' ')
+re_location = location[0]
+for i in range(1, len(location)):
+    re_location = re_location + "|" + location[i]
+
+# 3. state - 해외 주 단위
+states = rd.get("states")
+states = states.split(' ')
+re_states = states[0]
+for i in range(1, len(states)):
+    re_states = re_states + "|" + states[i-1]
+
+# 4. city - 해외 도시명
+city = rd.get("city")
+city = city.split(' ')
+re_city = city[0]
+for i in range(1, len(city)):
+    re_city = re_city + "|" + city[i]
+
+# 5.  currencyname - 통화명 (달러, 엔화 등등)
+currencyname = rd.get("currencyname")
+currencyname = currencyname.split(' ')
+re_currencyname = currencyname[0]
+for i in range(1, len(currencyname)):
+    re_currencyname = re_currencyname + "|" + currencyname[i]
 
 
 

@@ -17,17 +17,14 @@ number=re.compile(r'(하나|둘|셋|넷|다섯|여섯|일곱|여덟|아홉|열)(
 number_times=re.compile(r'\d+(화|부|편|차|회|회차)')
 number_percent=re.compile(r'(\d+(퍼센트|프로|%))|(일|이|삼|사|오|육|칠|팔|구|십|백)(일|이|삼|사|오|육|칠|팔|구|십|백)?(일|이|삼|사|오|육|칠|팔|구|십|백)?퍼센트')
 
-
-
-
-number_ordinal = re.compile(r'(\d+번)|(첫?두?세?네?(열|(스[무|물])|(서른)|(마흔)|(쉰)|(예순)|(일흔)|(여든)|(아흔))?\s?[한두세네]?(다섯)?(여섯)?(일곱)?(여덟)?(아홉)?\s?번째)')
-number_age = re.compile(r'(\d+[살세])|(((열)?(스[무물])?(서른)?(마흔)?(쉰)?(예순)?(일흔)?(여든)?(아흔)?)\s?([한두세네]*(다섯)?(여섯)?(일곱)?(여덟)?(아홉)?)\s?살)')
-number_birthyear = re.compile(r'\d{1,4}년생')
-number_rank = re.compile(r'\d+[등위]')
-unit_duration = re.compile(r'(\d+(일|(주일)|(개월)|년)(\s?(동안))?)|(하루|이틀)|(([이|삼|사|오|육|칠|팔|구]십\s?)?[일|이|삼|사|오|육|칠|팔|구](일|(주일)|(개월)|년))|(\d+(시간)?\s?(\d+|반)?분?\s?\d*초?\s?동안)|(\d+(시간)?\s?(\d+|반)?분?\s?\d*초?\s?)')
-number_decade = re.compile(r'\d{1,4}년대')
-unit_length = re.compile(r'\d+\.?\d*\s?((mm|(밀리미터))|((?!cm²)cm|(센티미터))|((?!m²)m|(미터))|((?!km²)km|(킬로미터))|(in|(인치))|((?!ft²)ft|(피트))|((?!yd²)yd|(야드))|(ch|(체인))|(fur|(펄롱))|(mile|(마일)))')
-unit_area = re.compile(r'\d+\.?\d*\s?((m²|(제곱미터))|(a|(아르))|(ha|(헥타르|(헥타아르)))|(km²|(제곱킬로미터))|(ft²|(제곱피트))|(yd²|(제곱야드))|(ac|(에이커))|(평)|(단)|(정))')
+number_ordinal = re.compile('(\d+번)|([첫두세네]\s?번째)|(((다섯)|(여섯)|(일곱)|(여덟)|(아홉))\s?번째)|((열|(스[무|물])|(서른)|(마흔)|(쉰)|(예순)|(일흔)|(여든)|(아흔)|(백))\s?[한두세네]?((다섯)|(여섯)|(일곱)|(여덟)|(아홉))?\s?번째)')
+number_age = re.compile('(\d+[살세])|((한|두|세|네|(다섯)|(여섯)|(일곱)|(여덟)|(아홉))\s?살)|((((열)|(스[무물])|(서른)|(마흔)|(쉰)|(예순)|(일흔)|(여든)|(아흔)))\s?(한|두|세|네|(다섯)|(여섯)|(일곱)|(여덟)|(아홉))?\s?살)')
+number_birthyear = re.compile('\d{1,4}년생')
+number_rank = re.compile('\d+[등위]')
+number_decade = re.compile('\d{1,4}년대')
+unit_length = re.compile('\d+\.?\d*\s?((mm|(밀리미터))|((?!cm²)cm|(센티미터))|((?!m²)m|(미터))|((?!km²)km|(킬로미터))|(in|(인치))|((?!ft²)ft|(피트))|((?!yd²)yd|(야드))|(ch|(체인))|(fur|(펄롱))|(mile|(마일)))')
+unit_area = re.compile('\d+\.?\d*\s?((m²|(제곱미터))|(a|(아르))|(ha|(헥타르|(헥타아르)))|(km²|(제곱킬로미터))|(ft²|(제곱피트))|(yd²|(제곱야드))|(ac|(에이커))|(평)|(단)|(정))')
+unit_duration = re.compile('(\d+(시간)?\s?(\d*|반)분?\s?\d*초?\s?동안)')
 
 #은비
 unit_weight = re.compile(r"""
@@ -196,14 +193,6 @@ def priRegex(text):
                 someValue = re.sub(r'일\s?', ' 00:00:00', someValue)
                 value[idx] = someValue
 
-    '''
-    for i in range(len(entitiy_name_list)):
-        print('entitiy name =', entitiy_name_list[i])
-        print('value = ', value[i])
-        print('start_idx = ', start_idx[i])
-        print('end_idx = ', end_idx[i])
-        print('----')
-    '''
     result = [entitiy_name_list, value,start_idx, end_idx, tagged_sentence]
     #print(result)
     return result
