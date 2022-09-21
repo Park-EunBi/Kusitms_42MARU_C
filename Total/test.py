@@ -1,6 +1,7 @@
 import re
 import main
 from main import priRegex
+'''
 def test_date():
     pattern = main.date
     valid_date = [
@@ -48,25 +49,6 @@ def test_date_period_lunar():
         assert re.match(pattern, date_period_lunar)
 
 '''
-def test_ethereum_address():
-    pattern = main.date
-    valid_date = [
-        "오늘",
-        "내일",
-        "어제",
-        "2018년 1월 15일",
-        "1월 1일",
-        "수요일",
-    ]
-    for date in valid_date:
-        assert re.match(pattern, date)
-    invalid_date = [
-        "오눌",
-        "네일"
-    ]
-    for date in invalid_date:
-        assert not re.match(pattern, date)
-'''
 
 def test_tagged_sentence():
     sentences = [
@@ -79,11 +61,11 @@ def test_tagged_sentence():
     ]
     value = [
         ['오늘', '1월 1일', '1일'],
-        ['이번주', '올해', '수자리'],
+        ['이번주', '올해', '사수자리'],
     ]
     start_idx =[
         [0, 9, 12],
-        [0, 15, 5],
+        [0, 15, 4],
     ]
     end_idx = [
         [1, 13, 13],
@@ -103,4 +85,3 @@ def test_tagged_sentence():
         assert Result[3] == end_idx[i], True
         assert Result[4] == tagged_sentence[i], True
         i+=1
-

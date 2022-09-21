@@ -1,5 +1,5 @@
 import re
-text = input()
+#text = input()
 
 
 #1~4번 엔티티
@@ -208,4 +208,4 @@ def priRegex(text):
     print(result)
     return result
 
-priRegex(text)
+#priRegex(text)
