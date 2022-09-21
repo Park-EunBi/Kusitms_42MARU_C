@@ -1,5 +1,5 @@
 import re
-text = input()
+#text = input()
 
 
 #1~4번 엔티티
@@ -17,9 +17,6 @@ number=re.compile(r'(하나|둘|셋|넷|다섯|여섯|일곱|여덟|아홉|열)(
 number_times=re.compile(r'\d+(화|부|편|차|회|회차)')
 number_percent=re.compile(r'(\d+(퍼센트|프로|%))|(일|이|삼|사|오|육|칠|팔|구|십|백)(일|이|삼|사|오|육|칠|팔|구|십|백)?(일|이|삼|사|오|육|칠|팔|구|십|백)?퍼센트')
 
-
-
-
 number_ordinal = re.compile('(\d+번)|([첫두세네]\s?번째)|(((다섯)|(여섯)|(일곱)|(여덟)|(아홉))\s?번째)|((열|(스[무|물])|(서른)|(마흔)|(쉰)|(예순)|(일흔)|(여든)|(아흔)|(백))\s?[한두세네]?((다섯)|(여섯)|(일곱)|(여덟)|(아홉))?\s?번째)')
 number_age = re.compile('(\d+[살세])|((한|두|세|네|(다섯)|(여섯)|(일곱)|(여덟)|(아홉))\s?살)|((((열)|(스[무물])|(서른)|(마흔)|(쉰)|(예순)|(일흔)|(여든)|(아흔)))\s?(한|두|세|네|(다섯)|(여섯)|(일곱)|(여덟)|(아홉))?\s?살)')
 number_birthyear = re.compile('\d{1,4}년생')
@@ -27,7 +24,6 @@ number_rank = re.compile('\d+[등위]')
 number_decade = re.compile('\d{1,4}년대')
 unit_length = re.compile('\d+\.?\d*\s?((mm|(밀리미터))|((?!cm²)cm|(센티미터))|((?!m²)m|(미터))|((?!km²)km|(킬로미터))|(in|(인치))|((?!ft²)ft|(피트))|((?!yd²)yd|(야드))|(ch|(체인))|(fur|(펄롱))|(mile|(마일)))')
 unit_area = re.compile('\d+\.?\d*\s?((m²|(제곱미터))|(a|(아르))|(ha|(헥타르|(헥타아르)))|(km²|(제곱킬로미터))|(ft²|(제곱피트))|(yd²|(제곱야드))|(ac|(에이커))|(평)|(단)|(정))')
-
 unit_duration = re.compile('(\d+(시간)?\s?(\d*|반)분?\s?\d*초?\s?동안)')
 
 #은비
@@ -90,8 +86,8 @@ unit_currency = re.compile(r"""
 """, re.VERBOSE)
 #돼?1파운드 잡힘 -> 왜 \S지??
 
-fortune_starsign = re.compile('[양|황소|쌍둥이|게|사자|처녀|천칭|전갈|궁수|염소|물병|물고기]자리')
-fortune_zodiac = re.compile('[쥐|소|호랑이|토끼|용|뱀|말|양|원숭이|닭|개|돼지]띠')
+fortune_starsign = re.compile(r'양자리|황소자리|쌍둥이자리|게자리|사자자리|처녀자리|천칭자리|전갈자리|궁수자리|염소자리|물병자리|물고기자리|사수자리')
+fortune_zodiac = re.compile(r'쥐띠|소띠|호랑이띠|토끼띠|용띠|뱀띠|말띠|양띠|원숭이띠|닭띠|개띠|돼지띠')
 currencyname = re.compile(r"""
                           ([ㄱ-ㅣ가-힣]+달러)
                           |(엔|유로|위안|파운드)
@@ -102,10 +98,10 @@ currencyname = re.compile(r"""
 #엔 -> @sys.currencyname  @sys.unit.currency 두 개 잡힘
 #근데 이거 redis에 넣어둬야할듯 넘 많아
 
-currency_code = re.compile('[A-Z]{3}')
-url = re.compile('(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?')
-bussiness_number = re.compile('([0-9]{3})-?([0-9]{2})-?([0-9]{5})')
-phone_number = re.compile('01[0|1|6|7|8|9?]-?[0-9]{4}-?[0-9]{4}')
+currency_code = re.compile(r'[A-Z]{3}')
+url = re.compile(r'(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?')
+bussiness_number = re.compile(r'([0-9]{3})-?([0-9]{2})-?([0-9]{5})')
+phone_number = re.compile(r'01[0|1|6|7|8|9?]-?[0-9]{4}-?[0-9]{4}')
 licenseplate_number = re.compile(r'\d{2,3}\s?[ㄱ-ㅣ가-힣]\s?\d{4}')
 
 regexes = {
@@ -159,6 +155,7 @@ def priRegex(text):
     value = []
     start_idx = []
     end_idx = []
+    result = []
 
     for k, v in list(regexes.items()):
 
@@ -191,19 +188,13 @@ def priRegex(text):
             if p.match(value[idx]):
                 continue
             else:
-                someValue = re.sub('[년월]\s?', '-', value[idx])
-                someValue = re.sub('일\s?', ' 00:00:00', value[idx])
+                someValue = re.sub(r'년\s?', '-', value[idx])
+                someValue = re.sub(r'월\s?', '-', someValue)
+                someValue = re.sub(r'일\s?', ' 00:00:00', someValue)
                 value[idx] = someValue
 
+    result = [entitiy_name_list, value,start_idx, end_idx, tagged_sentence]
+    #print(result)
+    return result
 
-    for i in range(len(entitiy_name_list)):
-        print('entitiy name =', entitiy_name_list[i])
-        print('value = ', value[i])
-        print('start_idx = ', start_idx[i])
-        print('end_idx = ', end_idx[i])
-        print('----')
-
-    print(tagged_sentence)
-
-
-priRegex(text)
+#priRegex(text)
