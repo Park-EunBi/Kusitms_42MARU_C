@@ -1,6 +1,6 @@
 import redis
 import csv
-# redis 에 정보 저장
+# set_redis 에 정보 저장
 
 rd = redis.StrictRedis(host='localhost', port=6379, db=0, charset="utf-8", decode_responses=True)
 
