@@ -90,7 +90,7 @@ date = re.compile(r"""
 
 ## 2. 레디스 사전 구축
 
-국가명, 국내 지명, 해외 주 이름, 해외 도시명, 해외 통화명과 같이 코드 내에서 직접 정규식으로 작성하기 힘든 개체명들은 레디스를 활용하여 사전을 구축한 뒤 정규식으로 변환하였습니다.
+국가명, 국내 지명, 해외 주 이름, 해외 도시명, 해외 통화명과 같이 코드 내에서 직접 정규식으로 작성하기 힘든 개체명들은 레디스를 활용하여 사전을 구축한 뒤 정규식으로 변환
 
 1. 사전 구축
     1. csv 형식의 오픈 데이터 셋 확보
@@ -251,9 +251,9 @@ entity_name, value, start_idx, end_idx, tagged_sentence에 저장되어 있는 �
 #return값
 [['@sys.date.period', '@sys.date.period', '@sys.fortune.starsign'], ['이번주', '올해', '사수자리'], ['0', '15', '4'], ['2', '16', '7'], '@sys.date.period @sys.fortune.starsign 운세 알려줘@sys.date.period 무슨 해야']
 
-```
-
 ## 4. 테스트코드 작성
+
+```
 
 - python의 테스트코드 검증 모듈 `pytest` 활용함.
 - 유닛테스트?
