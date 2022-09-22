@@ -1,0 +1,12 @@
+input : 이번주 사수자리 운세 알려줘올해 무슨 해야
+entity_name : @sys.date.period,@sys.date.period,@sys.fortune.starsign
+value : 이번주,올해,사수자리
+start_idx : 0,15,4
+end_idx : 2,16,7
+tagged_sentence : @sys.date.period @sys.fortune.starsign 운세 알려줘@sys.date.period 무슨 해야
+input : 2022년3월21일에 보낸 메일 찾아줘
+entity_name : @sys.date
+value : 2022-03-21 00:00:00
+start_idx : 0
+end_idx : 9
+tagged_sentence : @sys.date에 보낸 메일 찾아줘

@@ -3,14 +3,11 @@ import redis
 import set_redis
 text = input()
 
-
 #1~4번 엔티티
-date=re.compile(r'(어제|오늘|금일|내일|모레|글피)|\d+년\s\d+월\s\d+일|\d+월\s\d+일|[월화수목금토일]요일')
+date=re.compile(r'(어제|오늘|금일|내일|모레|글피)|\d+년\s?\d+월\s?\d+일|\d+월\s?\d+일|[월화수목금토일]요일')
 date_period=re.compile(r'(이번\s?[주해월])|(다음\s?[주해월])|(저번\s?[주해월])|(올해|작년|내년|전년|주말|평일|내후년)|\d+년|\d+월|\d+일부터\s\d+일까지')
 date_lunar=re.compile(r'음력\s?\d+년\s?\d+월\s?\d+일|(올해)?\s?음력\s?\d+월\s?\d+일|음력\s?(추석|설날)')
 date_period_lunar=re.compile(r'음력\s\d+월')
-
-#현준
 time=re.compile(r'(오전|오후|아침|점심|저녁|새벽)\s\d+시\s(\d+분)?반?|\d+분\s뒤|(\d+시)\s?\d+분|\d+시|\d+초|정오|자정')
 time_period=re.compile(r'\d+시(\s?\d+분)?\s?부터\s\d+시(\s?\d+분)?\s?까지|(오전|오후|아침|점심|저녁|새벽)')
 date_time=re.compile(r'(어제|오늘|내일|모레|글피)\s(오전|오후)?\s?\d+시|현재|\d+월\s?\d+일\s?(오전|오후|아침|점심|저녁|새벽)?\s?\d+시')
@@ -18,9 +15,6 @@ date_time_period=re.compile(r'(어제|오늘|내일|모레|글피)\s\d+시부터
 number=re.compile(r'(하나|둘|셋|넷|다섯|여섯|일곱|여덟|아홉|열)(명|개)?|\b\d+\b|(?<=[^가-힣])(이|삼|사|오|육|칠|팔|구|십|하나|둘|셋|넷|다섯|여섯|일곱|여덟|아홉|열)(?=[^가-힣])')
 number_times=re.compile(r'\d+(화|부|편|차|회|회차)')
 number_percent=re.compile(r'(\d+(퍼센트|프로|%))|(일|이|삼|사|오|육|칠|팔|구|십|백)(일|이|삼|사|오|육|칠|팔|구|십|백)?(일|이|삼|사|오|육|칠|팔|구|십|백)?퍼센트')
-
-
-
 
 number_ordinal = re.compile('(\d+번)|([첫두세네]\s?번째)|(((다섯)|(여섯)|(일곱)|(여덟)|(아홉))\s?번째)|((열|(스[무|물])|(서른)|(마흔)|(쉰)|(예순)|(일흔)|(여든)|(아흔)|(백))\s?[한두세네]?((다섯)|(여섯)|(일곱)|(여덟)|(아홉))?\s?번째)')
 number_age = re.compile('(\d+[살세])|((한|두|세|네|(다섯)|(여섯)|(일곱)|(여덟)|(아홉))\s?살)|((((열)|(스[무물])|(서른)|(마흔)|(쉰)|(예순)|(일흔)|(여든)|(아흔)))\s?(한|두|세|네|(다섯)|(여섯)|(일곱)|(여덟)|(아홉))?\s?살)')
@@ -91,6 +85,14 @@ unit_currency = re.compile(r"""
 |(\S+\s?원|\S+\s?달러|\S+\s?위안|\S+\s?센트|\S+\s?파운드|\S+\s?엔|\S+\s?유로|\S+\s?프랑|\S+\s?루피)
 """, re.VERBOSE)
 
+fortune_starsign = re.compile(r'양자리|황소자리|쌍둥이자리|게자리|사자자리|처녀자리|천칭자리|전갈자리|궁수자리|염소자리|물병자리|물고기자리|사수자리')
+fortune_zodiac = re.compile(r'쥐띠|소띠|호랑이띠|토끼띠|용띠|뱀띠|말띠|양띠|원숭이띠|닭띠|개띠|돼지띠')
+currency_code = re.compile(r'[A-Z]{3}')
+url = re.compile(r'(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?')
+bussiness_number = re.compile(r'([0-9]{3})-?([0-9]{2})-?([0-9]{5})')
+phone_number = re.compile(r'01[0|1|6|7|8|9?]-?[0-9]{4}-?[0-9]{4}')
+
+
 # 은비 - set_redis
 # Redis에 저장된 값 불러오기, 정규식 변환
 rd = redis.StrictRedis(host='localhost', port=6379, db=0, charset="utf-8", decode_responses=True)
@@ -156,13 +158,13 @@ currency_code = re.compile('[A-Z]{3}')
 url = re.compile('(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?')
 bussiness_number = re.compile('([0-9]{3})-?([0-9]{2})-?([0-9]{5})')
 phone_number = re.compile('01[0|1|6|7|8|9?]-?[0-9]{4}-?[0-9]{4}')
+
 licenseplate_number = re.compile(r'\d{2,3}\s?[ㄱ-ㅣ가-힣]\s?\d{4}')
 
 regexes = {
     '@sys.date.lunar': date_lunar,
     '@sys.date.period.lunars': date_period_lunar,
     '@sys.date' : date,
-
     '@sys.date.period' : date_period,
     '@sys.date.lunar' : date_lunar,
     '@sys.date.period.lunars' : date_period_lunar,
@@ -173,7 +175,6 @@ regexes = {
     '@sys.number' : number,
     '@sys.number.times' : number_times,
     '@sys.number.percent' : number_percent,
-
     '@sys.number.ordinal': number_ordinal,
     '@sys.number.age': number_age,
     '@sys.number.birthyear': number_birthyear,
@@ -182,7 +183,6 @@ regexes = {
     '@sys.number.decade': number_decade,
     '@sys.unit.length': unit_length,
     '@sys.unit.area': unit_area,
-
     '@sys.unit.weight' : unit_weight,
     '@sys.unit.volume' :unit_volume,
     '@sys.unit.pressure':unit_pressure,
@@ -191,10 +191,8 @@ regexes = {
     '@sys.unit.data' : unit_data,
     '@sys.unit.energy' :unit_energy,
     '@sys.unit.currency' : unit_currency,
-
     '@sys.fortune.starsign' : fortune_starsign,
     '@sys.fortune.zodiac' : fortune_zodiac,
-    '@sys.currencyname' : currencyname,
     '@sys.currency.code' : currency_code,
     '@sys.url' : url,
     '@sys.bussiness.number' : bussiness_number,
@@ -209,44 +207,75 @@ regexes = {
 
 }
 
-def priRegex(text):
+def Regex(text):
     tagged_sentence = text
     entitiy_name_list = []
     value = []
     start_idx = []
     end_idx = []
 
+    result = []
+    flag = 0
+
     for k, v in list(regexes.items()):
 
         m = v.finditer(text)
 
         for i in m:
+            flag = 0
 
-            if i.start() in start_idx: #최단 지우고, 최장으로 변경
-                idx = start_idx.index(i.start())
-                if end_idx[idx] >= i.end()-1:
+            if str(i.start()) in start_idx: #최단 지우고, 최장으로 변경
+                idx = start_idx.index(str(i.start()))
+                if int(end_idx[idx]) >= i.end()-1:
                     continue
                 tagged_sentence = tagged_sentence.replace(entitiy_name_list[idx], value[idx]) #entity -> 원래 value로 치환
                 print(i.group())
-                value[idx] = i.group() #value 리스트 수정
-                entitiy_name_list[idx] = k #entity 리스트 수정
+                value[idx] = i.group() #value 리스트 갱신
+                entitiy_name_list[idx] = k #entity 리스트 갱신
                 end_idx[idx] = i.end() - 1 #end_idx 갱신
                 tagged_sentence = tagged_sentence.replace((text[i.start():i.end()]), k) #tagged_sentence 수정
+                flag = 1
 
-            else: #처음 추가
+            for j in range(len(start_idx)): #중간에 껴있는 경우
+                s_idx = int(start_idx[j])
+                e_idx = int(end_idx[j])
+                if s_idx <i.start() and e_idx > i.end()-1:
+                    flag = 1
+
+            if flag ==0: #겹치지 않는 경우
                 entitiy_name_list.append(k)
-                start_idx.append(i.start())
+                start_idx.append(str(i.start()))
                 value.append(i.group())
-                end_idx.append(i.end()-1)
+                end_idx.append(str(i.end()-1))
                 tagged_sentence = tagged_sentence.replace((text[i.start():i.end()]), k)
 
     for entity in entitiy_name_list:
-        if entity == '@sys.date':
+        if entity == '@sys.date': #date 형식 변환
             idx = entitiy_name_list.index(entity)
             p = re.compile(r'(어제|오늘|금일|내일|모레|글피)|\d+월\s\d+일|[월화수목금토일]요일')
             if p.match(value[idx]):
                 continue
             else:
+                someValue = re.sub(r'년\s?', '-', value[idx])
+
+                month = re.search(r'\d+(?=월\s?)',someValue)
+                if len(month.group()) < 2:
+                    month = '0'+month.group()+'-'
+                    someValue = re.sub(r'\d월\s?', month, someValue)
+                else:
+                    someValue = re.sub(r'월\s?', '-', someValue)
+
+                dates = re.search(r'\d+(?=일\s?)', someValue)
+                if len(dates.group()) < 2:
+                    dates= '-0'+dates.group()+' 00:00:00'
+                    someValue = re.sub(r'\d일\s?', dates, someValue)
+                else:
+                    someValue = re.sub(r'일\s?', ' 00:00:00', someValue)
+                value[idx] = someValue
+
+    result = [entitiy_name_list, value,start_idx, end_idx, tagged_sentence]
+    return result
+
                 someValue = re.sub('[년월]\s?', '-', value[idx])
                 someValue = re.sub('일\s?', ' 00:00:00', value[idx])
                 value[idx] = someValue
