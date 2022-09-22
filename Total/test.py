@@ -2,12 +2,37 @@ import re
 import main
 from main import priRegex
 
-def test_Input_tagged_sentence():
-    Input = input()
-    Output = input()
 
-    Result = priRegex(Input)
-    assert Output == str(Result)
+def test_file():
+    entity_name_list =[]
+    value_list = []
+    start_idx_list =[]
+    end_idx_list =[]
+    tagged_sentence = []
+    Result =[]
+
+    f = open("testsentence.txt", 'r')
+    lines = f.readlines()
+    for i in range(len(lines)):
+        lines[i] = lines[i].strip()
+        if re.match(r'input\s:\s', lines[i]):
+            input = re.sub(r'input\s:\s', '', lines[i])
+        elif re.match(r'entity_name\s:\s', lines[i]):
+            entity_name = re.sub(r'entity_name\s:\s', '', lines[i])
+            entity_name_list = entity_name.split(',')
+        elif re.match(r'value\s:\s', lines[i]):
+            value = re.sub(r'value\s:\s', '', lines[i])
+            value_list = value.split(',')
+        elif re.match(r'start_idx\s:\s', lines[i]):
+            start_idx = re.sub(r'start_idx\s:\s', '', lines[i])
+            start_idx_list = start_idx.split(',')
+        elif re.match(r'end_idx\s:\s', lines[i]):
+            end_idx = re.sub(r'end_idx\s:\s', '', lines[i])
+            end_idx_list = end_idx.split(',')
+        elif re.match(r'tagged_sentence\s:\s', lines[i]):
+            tagged_sentence = re.sub(r'tagged_sentence\s:\s', '', lines[i])
+            Result = [entity_name_list, value_list, start_idx_list, end_idx_list, tagged_sentence]
+            assert Result == priRegex(input)
 
 '''
 def test_date():
@@ -47,50 +72,4 @@ def test_date_lunar():
     for date_lunar in valid_date_lunar:
         assert re.match(pattern, date_lunar)
 
-def test_date_period_lunar():
-    pattern = main.date_period_lunar
-    valid_date_period_lunar = [
-        "음력 1월",
-        "음력 2월",
-    ]
-    for date_period_lunar in valid_date_period_lunar:
-        assert re.match(pattern, date_period_lunar)
-
-
-
-def test_tagged_sentence():
-    sentences = [
-        "오늘 뉴스 들려줘1월 1일은 무슨 요일이야",
-        "이번주 사수자리 운세 알려줘올해 무슨 해야",
-    ]
-    entity_name_list = [
-        ['@sys.date', '@sys.date', '@sys.unit.duration'],
-        ['@sys.date.period', '@sys.date.period', '@sys.fortune.starsign'],
-    ]
-    value = [
-        ['오늘', '1월 1일', '1일'],
-        ['이번주', '올해', '사수자리'],
-    ]
-    start_idx =[
-        [0, 9, 12],
-        [0, 15, 4],
-    ]
-    end_idx = [
-        [1, 13, 13],
-        [2, 16, 7],
-    ]
-    tagged_sentence = [
-        '@sys.date 뉴스 들려줘@sys.date은 무슨 요일이야',
-        '@sys.date.period @sys.fortune.starsign 운세 알려줘@sys.date.period 무슨 해야',
-    ]
-    i=0
-    for sentence in sentences:
-        Result = main.priRegex(sentence)
-        #print(Result)
-        assert Result[0] == entity_name_list[i], True
-        assert Result[1] == value[i], True
-        assert Result[2] == start_idx[i], True
-        assert Result[3] == end_idx[i], True
-        assert Result[4] == tagged_sentence[i], True
-        i+=1
 '''
