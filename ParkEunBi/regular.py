@@ -1,3 +1,4 @@
+import set_redis_eunbi
 import redis
 weight1 = r"\d+mg|\d+g|\d+kg|\d+t|\d+kt|\d+gr|\d+oz|\d+lb"
 weight2 = r"\d+milligram|\d+gram|\d+kilogram|\d+tonne|\d+metric ton|\d+kiloton|\d+grain|\d+ounce|\d+pound"
@@ -89,7 +90,7 @@ currencyname = rd.get("currencyname")
 currencyname = currencyname.split(' ')
 re_currencyname = currencyname[0]
 for i in range(1, len(currencyname)):
-    re_currencyname = re_currencyname + "|" + currencyname[i]
+    re_currencyname = "\d+\s?" + re_currencyname + "|" + currencyname[i]
 
 
 
