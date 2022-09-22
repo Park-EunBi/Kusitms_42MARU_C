@@ -125,7 +125,7 @@ regexes = {
     '@sys.licenseplate.number' : licenseplate_number,
 }
 
-def priRegex(text):
+def Regex(text):
     tagged_sentence = text
     entitiy_name_list = []
     value = []

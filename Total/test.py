@@ -11,16 +11,16 @@ def test_file():
     tagged_sentence = []
     Result =[]
 
-    f = open("testsentence.txt", 'r')
-    lines = f.readlines()
-    for i in range(len(lines)):
-        lines[i] = lines[i].strip()
-        if re.match(r'input\s:\s', lines[i]):
-            input = re.sub(r'input\s:\s', '', lines[i])
-        elif re.match(r'entity_name\s:\s', lines[i]):
-            entity_name = re.sub(r'entity_name\s:\s', '', lines[i])
-            entity_name_list = entity_name.split(',')
-        elif re.match(r'value\s:\s', lines[i]):
+    f = open("testsentence.txt", 'r') #텍스트 파일 불러오기
+    lines = f.readlines() #한 줄씩 읽어서 lines 리스트에 저장
+    for i in range(len(lines)): #lines리스트 돌기
+        lines[i] = lines[i].strip() #\n제거
+        if re.match(r'input\s:\s', lines[i]): #input인 경우
+            input = re.sub(r'input\s:\s', '', lines[i]) #input지워주고, input 문장만 변수에 저장
+        elif re.match(r'entity_name\s:\s', lines[i]): #entity name인 경우
+            entity_name = re.sub(r'entity_name\s:\s', '', lines[i]) #entity name지워주고
+            entity_name_list = entity_name.split(',') #엔티티 이름 ,기준으로 나눠서 리스트에 저장
+        elif re.match(r'value\s:\s', lines[i]): #동일한 방식
             value = re.sub(r'value\s:\s', '', lines[i])
             value_list = value.split(',')
         elif re.match(r'start_idx\s:\s', lines[i]):
@@ -31,8 +31,8 @@ def test_file():
             end_idx_list = end_idx.split(',')
         elif re.match(r'tagged_sentence\s:\s', lines[i]):
             tagged_sentence = re.sub(r'tagged_sentence\s:\s', '', lines[i])
-            Result = [entity_name_list, value_list, start_idx_list, end_idx_list, tagged_sentence]
-            assert Result == priRegex(input)
+            Result = [entity_name_list, value_list, start_idx_list, end_idx_list, tagged_sentence] #한 문장의 output결과 Result에 저장
+            assert Result == Regex(input) #main코드로 돌리고나온 결과와 동일한지 확인
 
 '''
 def test_date():
