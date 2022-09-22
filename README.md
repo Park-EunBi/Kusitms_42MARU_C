@@ -1,6 +1,5 @@
 # **💬**QA(Question Answering) 및 TA(Text Analytics) 플랫폼 개발, 42MARU
 
----
 
 ## ✨ 프로젝트 기간 : 2022년 09월 4일 ~ 2022년 09월 23일
 
@@ -34,11 +33,9 @@
 
 ## ✨ ****Development Environment & Language****
 
-<img src="[https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white](https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white)">
-
+<img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white">
 <img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=Redis&logoColor=white">
-
-<img src="[https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white](https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white)">
+<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white">
 
 ## ✨ ****Detail****
 
