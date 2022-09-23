@@ -279,15 +279,10 @@ def test_product():
 `assert문`을 통해 test Pass/Fail을 검증한다.
 
 ### 4.2 pytest 실행명령어
-* pytest [-v,-s : 옵션] [실행파일명]
-\-v: verbose, 결과를 자세히 출력
-\-s: 검증결과에 print문 출력 
-* pytest test_math_func.py::test_add
-특정 파일의 특정 함수만 검증이 가능함.
-* pytest -v -k "add or string"
-\-k: 함수명검색옵션 : add 또는 string이 들어간 함수를 검증 실행함.
-* pytest -v -m number
-\-m:@pytest.mark.number 'number'로 마킹된 함수를 `pytest -m number`로 검증가능함.
+* pytest [-v,-s : 옵션] [실행파일명]<br> \-v: verbose, 결과를 자세히 출력<br> \-s: 검증결과에 print문 출력 
+* pytest test_math_func.py::test_add <br> 특정 파일의 특정 함수만 검증이 가능함.
+* pytest -v -k "add or string" <br>\-k: 함수명검색옵션, add 또는 string이 들어간 함수를 검증 실행함.
+* pytest -v -m number <br>\-m:@pytest.mark.number 'number'로 마킹된 함수를 `pytest -m number`로 검증가능함.
 
 ### 4.3 테스트코드
 
@@ -323,7 +318,5 @@ def test_file():
             Result = [entity_name_list, value_list, start_idx_list, end_idx_list, tagged_sentence] #한 문장의 output결과 Result에 저장
             assert Result == Regex(input) 
 ```
-설명) main.py의 Regex(input)를 호출해 리턴받은 값과 
-testsentence.txt 파일의 예시 Ouput값을 전처리한 Result값을  
-assert Result == Regex(input) 을 통해 검증한다.
+설명) main.py의 Regex(input)를 호출해 리턴받은 값과 testsentence.txt 파일의 예시 Ouput값을 전처리한 Result값을 assert Result == Regex(input) 을 통해 검증한다.
 
