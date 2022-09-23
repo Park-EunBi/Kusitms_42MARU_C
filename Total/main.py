@@ -86,7 +86,7 @@ currency_code = re.compile(r'[A-Z]{3}')
 url = re.compile(r'(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?')
 bussiness_number = re.compile(r'([0-9]{3})-?([0-9]{2})-?([0-9]{5})')
 phone_number = re.compile(r'01[0|1|6|7|8|9?]-?[0-9]{4}-?[0-9]{4}')
-
+licenseplate_number = re.compile(r'\d{2,3}\s?[ㄱ-ㅣ가-힣]\s?\d{4}')
 
 # Redis에 저장된 값 불러오기, 정규식 변환
 rd = redis.StrictRedis(host='localhost', port=6379, db=0, charset="utf-8", decode_responses=True)
