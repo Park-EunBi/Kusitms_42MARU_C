@@ -253,20 +253,16 @@ entity_name, value, start_idx, end_idx, tagged_sentence에 저장되어 있는 �
 
 ## 4. 테스트코드 작성
 
-```
-
-- python의 테스트코드 검증 모듈 `pytest` 활용함.
-- 유닛테스트?
+* python의 테스트코드 검증 모듈 `pytest` 활용함.
+* 유닛테스트
 함수,클래스 등의 'unit'이 원하는 결과값을 리턴하는지
 확인하는 행위
 
-### Pytest
-
-- test_접두어를 유닛테스트 대상 파일/함수로 인식함.
+### 4.1 Pytest
+* pytest는 test_접두어를 유닛테스트 대상 파일/함수로 인식함.
 
 ```
-# content of test_math_func.py
-
+\# content of test_math_func.py
 import math_func
 
 def test_add():
@@ -278,45 +274,56 @@ def test_product():
 	assert math_func.product(5,5) == 25
 	assert math_func.product(5) == 10
 	assert math_func.product(7) == 14
-
 ```
-
 위 코드와 test_접두어가 붙은 함수를 정의하고
 `assert문`을 통해 test Pass/Fail을 검증한다.
 
-### pytest 실행명령어
-
-- pytest -v -s …
+### 4.2 pytest 실행명령어
+* pytest [-v,-s : 옵션] [실행파일명]
 \-v: verbose, 결과를 자세히 출력
-\-s: print문 출력 옵션
-- pytest test_math_func.py::test_add
+\-s: 검증결과에 print문 출력 
+* pytest test_math_func.py::test_add
 특정 파일의 특정 함수만 검증이 가능함.
-- pytest -v -k "add or string"
+* pytest -v -k "add or string"
 \-k: 함수명검색옵션 : add 또는 string이 들어간 함수를 검증 실행함.
-- pytest -v -m number
+* pytest -v -m number
+\-m:@pytest.mark.number 'number'로 마킹된 함수를 `pytest -m number`로 검증가능함.
 
+### 4.3 테스트코드
+
+```python
+def test_file():
+    entity_name_list =[]
+    value_list = []
+    start_idx_list =[]
+    end_idx_list =[]
+    tagged_sentence = []
+    Result =[]
+
+    f = open("testsentence.txt", 'r') #텍스트 파일 불러오기
+    lines = f.readlines() #한 줄씩 읽어서 lines 리스트에 저장
+    for i in range(len(lines)): #lines리스트 돌기
+        lines[i] = lines[i].strip() #\n제거
+        if re.match(r'input\s:\s', lines[i]): #input인 경우
+            input = re.sub(r'input\s:\s', '', lines[i]) #input지워주고, input 문장만 변수에 저장
+        elif re.match(r'entity_name\s:\s', lines[i]): #entity name인 경우
+            entity_name = re.sub(r'entity_name\s:\s', '', lines[i]) #entity name지워주고
+            entity_name_list = entity_name.split(',') #엔티티 이름 ,기준으로 나눠서 리스트에 저장
+        elif re.match(r'value\s:\s', lines[i]): #동일한 방식
+            value = re.sub(r'value\s:\s', '', lines[i])
+            value_list = value.split(',')
+        elif re.match(r'start_idx\s:\s', lines[i]):
+            start_idx = re.sub(r'start_idx\s:\s', '', lines[i])
+            start_idx_list = start_idx.split(',')
+        elif re.match(r'end_idx\s:\s', lines[i]):
+            end_idx = re.sub(r'end_idx\s:\s', '', lines[i])
+            end_idx_list = end_idx.split(',')
+        elif re.match(r'tagged_sentence\s:\s', lines[i]):
+            tagged_sentence = re.sub(r'tagged_sentence\s:\s', '', lines[i])
+            Result = [entity_name_list, value_list, start_idx_list, end_idx_list, tagged_sentence] #한 문장의 output결과 Result에 저장
+            assert Result == Regex(input) 
 ```
-@pytest.mark.number
-	def add(x,y):
-		return x+y
+설명) main.py의 Regex(input)를 호출해 리턴받은 값과 
+testsentence.txt 파일의 예시 Ouput값을 전처리한 Result값을  
+assert Result == Regex(input) 을 통해 검증한다.
 
-```
-
-number로 마킹된 함수를 `pytest -m number`로 검증가능함.
-
-### 테스트코드
-
-```
-import main
-
-def test_Input_tagged_sentence():
-    Input = input()
-    Output = input()
-
-    Result = priRegex(Input)
-    assert Output == str(Result)
-
-```
-
-input과 ouput 값을 입력받아 `main.py`의
-priRegex의 인수로 할당하여 호출함.
