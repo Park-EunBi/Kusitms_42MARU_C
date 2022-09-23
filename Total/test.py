@@ -11,7 +11,7 @@ def test_file():
     tagged_sentence = []
     Result =[]
 
-    f = open("testsentence.txt", 'r') #텍스트 파일 불러오기
+    f = open("testsentence.txt", 'r', encoding = 'utf-8') #텍스트 파일 불러오기
     lines = f.readlines() #한 줄씩 읽어서 lines 리스트에 저장
     for i in range(len(lines)): #lines리스트 돌기
         lines[i] = lines[i].strip() #\n제거
