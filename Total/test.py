@@ -1,6 +1,6 @@
 import re
 import main
-from main import priRegex
+from main import Regex
 
 
 def test_file():
